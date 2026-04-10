@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>분배금 계산기 by fourcard</title>
+<meta name="description" content="메이플랜드 공대 분배금 계산기 by fourcard">
+<meta name="theme-color" content="#1a0a00">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="분배금 계산기">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231a0a00'/%3E%3Cstop offset='100%25' stop-color='%232d1a00'/%3E%3C/linearGradient%3E%3ClinearGradient id='g1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FFF8DC'/%3E%3Cstop offset='50%25' stop-color='%23FFD700'/%3E%3Cstop offset='100%25' stop-color='%23B8860B'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='1' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FFFACD'/%3E%3Cstop offset='50%25' stop-color='%23FFC200'/%3E%3Cstop offset='100%25' stop-color='%238B6914'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' rx='18'/%3E%3Cg transform='translate(50,52) rotate(-15)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g1)' stroke='%238B6914' stroke-width='1'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%231a0a00' opacity='0.85'%3E%26%23x2660%3B%3C/text%3E%3C/g%3E%3Cg transform='translate(50,52) rotate(-5)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g2)' stroke='%23DAA520' stroke-width='1'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%238B0000' opacity='0.9'%3E%26%23x2665%3B%3C/text%3E%3C/g%3E%3Cg transform='translate(50,52) rotate(5)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g1)' stroke='%238B6914' stroke-width='1'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%238B0000' opacity='0.9'%3E%26%23x2666%3B%3C/text%3E%3C/g%3E%3Cg transform='translate(50,52) rotate(15)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g2)' stroke='%23DAA520' stroke-width='1.5'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%231a0a00' opacity='0.85'%3E%26%23x2663%3B%3C/text%3E%3C/g%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231a0a00'/%3E%3Cstop offset='100%25' stop-color='%232d1a00'/%3E%3C/linearGradient%3E%3ClinearGradient id='g1' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FFF8DC'/%3E%3Cstop offset='50%25' stop-color='%23FFD700'/%3E%3Cstop offset='100%25' stop-color='%23B8860B'/%3E%3C/linearGradient%3E%3ClinearGradient id='g2' x1='1' y1='0' x2='0' y2='1'%3E%3Cstop offset='0%25' stop-color='%23FFFACD'/%3E%3Cstop offset='50%25' stop-color='%23FFC200'/%3E%3Cstop offset='100%25' stop-color='%238B6914'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23bg)' rx='18'/%3E%3Cg transform='translate(50,52) rotate(-15)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g1)' stroke='%238B6914' stroke-width='1'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%231a0a00' opacity='0.85'%3E%26%23x2660%3B%3C/text%3E%3C/g%3E%3Cg transform='translate(50,52) rotate(-5)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g2)' stroke='%23DAA520' stroke-width='1'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%238B0000' opacity='0.9'%3E%26%23x2665%3B%3C/text%3E%3C/g%3E%3Cg transform='translate(50,52) rotate(5)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g1)' stroke='%238B6914' stroke-width='1'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%238B0000' opacity='0.9'%3E%26%23x2666%3B%3C/text%3E%3C/g%3E%3Cg transform='translate(50,52) rotate(15)'%3E%3Crect x='-15' y='-22' width='30' height='44' rx='4' fill='url(%23g2)' stroke='%23DAA520' stroke-width='1.5'/%3E%3Ctext x='0' y='8' text-anchor='middle' font-size='18' fill='%231a0a00' opacity='0.85'%3E%26%23x2663%3B%3C/text%3E%3C/g%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0fbff;--bg2:#ffffff;--bg3:#f0fbff;--bg4:#e8f8fc;
+  --teal:#2fb8c8;--teal2:#4dd4de;--teal3:#7de4ea;
+  --border:#c8f0f5;--border2:#a8e8f0;
+  --text:#2d5a6b;--text2:#4a8a9a;--text3:#6aa8b4;--text4:#90c8d4;
+  --red:#e05070;--green:#3aaa60;--amber:#c08020;--purple:#8040c0;
+  --white:#ffffff;
+  --shadow:0 3px 12px rgba(45,180,200,0.12);--shadow2:0 2px 8px rgba(45,180,200,0.08);
+  --radius:14px;--radius2:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nanum Gothic',sans-serif;background:var(--bg);min-height:100vh;color:var(--text);}
+/* ── 헤더 ── */
+.header{background:var(--bg2);border-bottom:2.5px solid var(--teal3);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow2);}
+.header-logo{display:flex;align-items:center;gap:8px;}
+.header-title{font-family:'Jua',sans-serif;font-size:18px;color:var(--teal);letter-spacing:0.3px;}
+.header-sub{font-size:10px;color:var(--text4);margin-left:8px;letter-spacing:0.08em;}
+.header-btn{background:var(--bg4);border:1.5px solid var(--border2);border-radius:20px;padding:6px 14px;font-size:11px;color:var(--teal);cursor:pointer;font-family:'Jua',sans-serif;transition:all .15s;}
+.header-btn:hover{background:#d0f5f8;border-color:var(--teal);}
+/* ── 팝업 ── */
+#contactPopup{position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:9999;display:none;align-items:center;justify-content:center;}
+#contactPopup.show{display:flex;}
+.popup-box{background:#fff;border:2.5px solid var(--teal3);border-radius:16px;padding:28px 36px;text-align:center;min-width:280px;box-shadow:0 8px 32px rgba(45,180,200,0.2);}
+.popup-title{font-family:'Jua',sans-serif;font-size:16px;color:var(--teal);margin-bottom:10px;}
+.popup-desc{font-size:13px;color:var(--text2);line-height:1.8;}
+.popup-btn{margin-top:18px;background:var(--teal2);color:#fff;border:none;padding:8px 24px;font-size:13px;cursor:pointer;font-family:'Jua',sans-serif;border-radius:20px;}
+/* ── 탭 ── */
+.tabs{background:var(--bg2);border-bottom:2px solid var(--border);display:flex;padding:0 20px;overflow-x:auto;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{padding:11px 16px;font-size:12px;font-weight:700;color:var(--text4);cursor:pointer;border:none;border-bottom:3px solid transparent;background:none;white-space:nowrap;font-family:'Jua',sans-serif;transition:all .15s;}
+.tab-btn:hover{color:var(--teal);}
+.tab-btn.active{background:var(--bg4);color:var(--teal);border-bottom-color:var(--teal);}
+/* ── 메인 ── */
+.main{max-width:1200px;margin:0 auto;padding:16px 20px 40px;}
+.screen{display:none;}.screen.active{display:block;animation:fadeIn 0.2s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+/* ── 카드 ── */
+.card{background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow2);margin-bottom:14px;}
+.card-title{font-family:'Jua',sans-serif;font-size:14px;color:var(--teal);margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+.card-title::before{content:'';width:4px;height:16px;background:var(--teal2);border-radius:2px;display:inline-block;flex-shrink:0;}
+/* ── row/col ── */
+.row{display:flex;gap:14px;}.col{flex:1;min-width:0;}
+/* ── 입력 ── */
+input[type=text],input[type=number],input[type=date],select,textarea{font-family:'Nanum Gothic',sans-serif;font-size:13px;padding:7px 10px;border:1.5px solid var(--border);border-radius:var(--radius2);background:var(--bg4);color:var(--text);outline:none;transition:border .15s;width:100%;}
+input:focus,select:focus,textarea:focus{border-color:var(--teal);background:#fff;}
+select{cursor:pointer;}
+/* ── 버튼 ── */
+.btn{font-family:'Jua',sans-serif;font-size:13px;padding:7px 16px;border-radius:20px;border:1.5px solid var(--border2);background:var(--bg2);color:var(--teal);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.btn:hover{background:var(--bg4);}
+.btn.primary{background:var(--teal2);color:#fff;border-color:var(--teal);}
+.btn.primary:hover{background:var(--teal);}
+.btn.danger{background:#fff0f2;color:var(--red);border-color:#f0b0b8;}
+.btn.danger:hover{background:#ffe0e4;}
+.btn.success{background:#e8fff0;color:var(--green);border-color:#a0d8b0;}
+.btn.success:hover{background:#d0f5e0;}
+.btn.warning{background:#fff8e0;color:var(--amber);border-color:#f0d880;}
+/* ── 뱃지 ── */
+.badge{display:inline-block;font-size:10px;padding:2px 9px;border-radius:20px;font-weight:700;white-space:nowrap;}
+.badge-job{background:var(--bg4);color:var(--teal);border:1.5px solid var(--border2);}
+.badge-merc{background:#fff8e0;color:#c08020;border:1.5px solid #f0d880;}
+.badge-alba{background:#fff0e8;color:#c06020;border:1.5px solid #f0c098;}
+.badge-seller{background:#e8fff0;color:#2e8b57;border:1.5px solid #a0d8b0;}
+.badge-recruiter{background:#f0e8ff;color:#8040c0;border:1.5px solid #d0b0f0;}
+.badge-guest{background:#fff0f5;color:#c04070;border:1.5px solid #f0a8c0;}
+.badge-support{background:#e8f0ff;color:#4060c0;border:1.5px solid #a0b8f0;}
+.badge-penalty{background:#fff0f2;color:var(--red);border:1.5px solid #f0b0b8;}
+.badge-99{background:#f0e8ff;color:#8040c0;border:1.5px solid #d0b0f0;}
+.badge-499{background:#e8f0ff;color:#4060c0;border:1.5px solid #a0b8f0;}
+.badge-999{background:#fff8e0;color:#c08020;border:1.5px solid #f0d880;}
+.badge-no{background:#e8fff0;color:#2e8b57;border:1.5px solid #a0d8b0;}
+.badge-selling{background:#fff8e0;color:#c08020;border:1.5px solid #f0d880;}
+.badge-sold{background:#e8fff0;color:#2e8b57;border:1.5px solid #a0d8b0;}
+/* ── 멤버 ── */
+.member-row{display:flex;align-items:center;gap:8px;padding:7px 4px;border-bottom:1.5px dashed var(--border);}
+.member-row:last-child{border-bottom:none;}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--bg4);border:2px solid var(--teal3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--teal);flex-shrink:0;}
+.avatar.merc{background:#fff8e0;border-color:#f0d880;color:#c08020;}
+.avatar.alba{background:#fff0e8;border-color:#f0c098;color:#c06020;}
+.avatar.seller{background:#e8fff0;border-color:#a0d8b0;color:#2e8b57;}
+.avatar.recruiter{background:#f0e8ff;border-color:#d0b0f0;color:#8040c0;}
+.avatar.guest{background:#fff0f5;border-color:#f0a8c0;color:#c04070;}
+.member-name{flex:1;font-size:13px;font-weight:700;color:var(--text);}
+/* ── 통계 칩 ── */
+.stat-wrap{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px;border-bottom:1.5px dashed var(--border);background:var(--bg4);border-radius:0;}
+.stat-chip{background:var(--bg2);border:1.5px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text3);}
+.stat-chip .val{color:var(--teal);font-weight:700;margin-left:3px;}
+/* ── 테이블 ── */
+.tbl{width:100%;border-collapse:collapse;font-size:12px;}
+.tbl th{background:var(--bg4);color:var(--teal);font-weight:700;padding:8px 6px;text-align:center;border-bottom:2px solid var(--border2);}
+.tbl td{padding:7px 6px;border-bottom:1.5px dashed var(--border);vertical-align:middle;text-align:center;color:var(--text);}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:var(--bg4);}
+.tbl.guest-tbl th{background:#fff5f8;}
+.tbl.merc-tbl th{background:#fffaf0;}
+.tbl.cost-tbl th{background:#f8f0ff;}
+/* ── 결과 ── */
+.metrics{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;}
+.metric{flex:1;min-width:100px;background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius);padding:12px 14px;text-align:center;box-shadow:var(--shadow2);}
+.metric-label{font-size:11px;color:var(--text3);margin-bottom:4px;}
+.metric-value{font-family:'Jua',sans-serif;font-size:17px;color:var(--text);}
+.metric-value.green{color:var(--green);}.metric-value.red{color:var(--red);}.metric-value.orange{color:var(--amber);}.metric-value.blue{color:var(--teal);}.metric-value.purple{color:var(--purple);}
+.toggle-wrap{display:flex;align-items:center;gap:6px;cursor:pointer;}
+.toggle{width:40px;height:22px;border-radius:11px;background:var(--border);position:relative;transition:background .2s;flex-shrink:0;border:1.5px solid var(--border2);}
+.toggle.on{background:var(--teal2);border-color:var(--teal);}
+.toggle::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,0.15);}
+.toggle.on::after{left:20px;}
+.result-row{display:flex;align-items:center;gap:10px;padding:10px 6px;border-bottom:1.5px dashed var(--border);}
+.result-row:last-child{border-bottom:none;}
+.result-amount{font-family:'Jua',sans-serif;font-size:16px;color:var(--teal);min-width:90px;text-align:right;}
+/* ── 히스토리 ── */
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.bar-label{font-size:12px;color:var(--text3);min-width:70px;}
+.bar-track{flex:1;height:10px;background:var(--bg4);border-radius:5px;overflow:hidden;border:1px solid var(--border);}
+.bar-fill{height:100%;border-radius:5px;background:var(--teal2);transition:width .5s;}
+.bar-val{font-size:12px;font-weight:700;color:var(--teal);min-width:75px;text-align:right;}
+.hist-row{display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:1.5px dashed var(--border);cursor:pointer;border-radius:var(--radius2);transition:background .15s;}
+.hist-row:hover{background:var(--bg4);}
+/* ── 기타 ── */
+.divider{height:1px;background:var(--border);margin:10px 0;}
+.section-label{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:0.08em;margin-bottom:6px;margin-top:8px;}
+.field-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.field-label{font-size:12px;color:var(--text3);min-width:80px;flex-shrink:0;}
+.chk{width:16px;height:16px;accent-color:var(--teal2);cursor:pointer;}
+.info-box{background:var(--bg4);border:1.5px solid var(--border2);border-left:4px solid var(--teal2);border-radius:0 var(--radius2) var(--radius2) 0;padding:10px 14px;font-size:12px;color:var(--text2);margin-bottom:12px;line-height:1.7;}
+.info-box b{color:var(--teal);}
+.backup-bar{display:flex;gap:8px;align-items:center;background:#fff8e0;border:1.5px solid #f0d880;border-radius:var(--radius2);padding:8px 14px;margin-bottom:14px;font-size:12px;color:var(--amber);}
+.role-info-box{background:var(--bg4);border:1.5px solid var(--border);border-radius:var(--radius2);padding:10px 14px;font-size:12px;margin-top:8px;}
+.role-info-row{display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap;}
+.role-info-row:last-child{margin-bottom:0;}
+.role-info-label{font-size:11px;color:var(--text3);min-width:60px;}
+.seller-combo{position:relative;flex:1;min-width:80px;}
+.seller-combo input{width:100%;}
+.seller-dropdown{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:2px solid var(--teal2);border-radius:var(--radius2);z-index:100;max-height:160px;overflow-y:auto;box-shadow:var(--shadow);}
+.seller-dropdown.open{display:block;}
+.seller-option{padding:6px 10px;font-size:13px;cursor:pointer;color:var(--text);}
+.seller-option:hover{background:var(--bg4);}
+.guide-section{margin-bottom:18px;}
+.guide-step{display:flex;align-items:flex-start;gap:12px;padding:12px;background:var(--bg4);border-radius:var(--radius2);margin-bottom:8px;border-left:4px solid var(--teal2);}
+.guide-step-num{font-family:'Jua',sans-serif;font-size:18px;color:var(--teal);min-width:28px;}
+.guide-step-content{flex:1;}
+.guide-step-title{font-weight:700;font-size:13px;color:var(--teal);margin-bottom:3px;}
+.guide-step-desc{font-size:12px;color:var(--text2);line-height:1.6;}
+.term-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px dashed var(--border);}
+.term-row:last-child{border-bottom:none;}
+.term-badge{min-width:70px;text-align:center;}
+.term-desc{font-size:12px;color:var(--text2);line-height:1.6;}
+.alert-box{background:#fff8e0;border:1.5px solid #f0d880;border-left:4px solid #e8c820;border-radius:0 var(--radius2) var(--radius2) 0;padding:12px 16px;font-size:12px;color:#7a6010;margin-bottom:10px;line-height:1.6;}
+.alert-box.red{background:#fff0f2;border-color:#f0b0b8;border-left-color:var(--red);color:#904040;}
+.alert-box.green{background:#e8fff0;border-color:#a0d8b0;border-left-color:var(--green);color:#206840;}
+.raid-select-bar{display:flex;gap:8px;align-items:center;margin-bottom:12px;background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius2);padding:10px 14px;}
+.pen-pct-input{width:64px !important;flex:none !important;}
+.part-select-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 4px;margin-bottom:6px;}
+.part-count{font-size:12px;color:var(--teal);font-weight:700;}
+.cfg-date-bar{display:flex;gap:8px;align-items:center;background:var(--bg4);border:1.5px solid var(--border2);border-radius:var(--radius2);padding:9px 13px;margin-bottom:14px;flex-wrap:wrap;}
+.footer{text-align:center;padding:12px;font-size:11px;color:#8bc34a;font-family:'Jua',sans-serif;letter-spacing:0.05em;margin-top:10px;}
+@media(max-width:700px){.row{flex-direction:column;}.metrics{gap:6px;}.metric{min-width:80px;padding:8px;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo" onclick="showTab(0);document.getElementById('updatePopup').style.display='flex';" style="cursor:pointer;">
+    <span style="font-size:20px;">🗡️</span>
+    <span class="header-title">분배금 계산기</span>
+    <span class="header-sub">by fourcard</span>
+  </div>
+  <button class="header-btn" onclick="document.getElementById('contactPopup').classList.add('show')">💌 by fourcard ▶</button>
+</div>
+<div id="contactPopup" class="" onclick="if(event.target===this)this.classList.remove('show')">
+  <div class="popup-box">
+    <div class="popup-title">💬 문의사항</div>
+    <div class="popup-desc">문의사항은 디스코드<br><b style="color:var(--teal);">j_son1993</b> 으로 DM 주세요! 🌊</div>
+    <button class="popup-btn" onclick="document.getElementById('contactPopup').classList.remove('show')">확인</button>
+  </div>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab(0)">📖 사용방법</button>
+  <button class="tab-btn" onclick="showTab(1)">⚙️ 공대 설정</button>
+  <button class="tab-btn" onclick="showTab(2)">📝 정산 입력</button>
+  <button class="tab-btn" onclick="showTab(3)">💰 분배 결과</button>
+  <button class="tab-btn" onclick="showTab(4)">📊 통계 & 히스토리</button>
+</div>
+<div class="main">
+
+<!-- ═══ 탭0: 사용방법 ═══ -->
+<div class="screen active" id="screen-0">
+  <div class="row">
+    <div class="col">
+      <!-- 전체 흐름 -->
+      <div class="card">
+        <div class="card-title">🗺️ 전체 사용 흐름</div>
+        <div class="guide-step">
+          <div class="guide-step-num">1</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">⚙️ 공대 설정</div>
+            <div class="guide-step-desc">공대 이름, 판매자 인센 %, 손님구인 인센 금액을 입력하고 <b>멤버</b>를 추가합니다. 패널티 항목과 용병/알바 지급 방식도 여기서 설정해요.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">2</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">⚔️ 원정대 입력</div>
+            <div class="guide-step-desc">날짜, 이번 회차 참여 멤버 체크 → 드랍템/손님지불금/공대지출 입력 → 패널티 지정 → <b>이 회차 저장</b> 클릭!</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">3</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">💰 분배 결과</div>
+            <div class="guide-step-desc">멤버별 최종 분배금 확인. 정산 완료된 멤버는 토글로 체크하세요. 상단 드롭다운으로 이전 회차 결과도 조회 가능합니다.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">4</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">📊 통계 & 히스토리</div>
+            <div class="guide-step-desc">전체 누적 정산금, 멤버별 수령액 통계, 회차별 히스토리를 확인할 수 있어요.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 저장 방식 안내 -->
+      <div class="card">
+        <div class="card-title">💾 저장 방식 안내</div>
+        <div class="alert-box green" style="margin-bottom:10px;">
+          ✅ <b>이 회차 저장</b> — 입력한 회차 데이터를 <b>이 브라우저 내부(localStorage)</b>에 저장합니다.<br>
+          같은 컴퓨터, 같은 브라우저에서만 유지되며 브라우저 데이터 초기화 시 삭제될 수 있어요.
+        </div>
+        <div class="alert-box" style="margin-bottom:10px;">
+          📥 <b>백업 저장</b> — 모든 데이터를 <b>JSON 파일</b>로 다운로드합니다.<br>
+          다른 기기에서 사용하거나 데이터를 보관하고 싶을 때 꼭 백업하세요!<br>
+          📤 <b>백업 불러오기</b> — 저장한 JSON 파일을 불러와 데이터를 복원합니다.
+        </div>
+        <div class="alert-box red">
+          ⚠️ <b>업데이트 시 새 파일을 드려야 합니다.</b><br>
+          업데이트 파일을 받으면 <b>백업 저장 → 새 파일에서 백업 불러오기</b> 순서로 데이터를 이전하세요.<br>
+          업데이트 문의 및 친추: <b>인게임 fourcard</b> 로 친구 추가 꼭 부탁드립니다! 🙏
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <!-- 용어 설명 -->
+      <div class="card">
+        <div class="card-title">📚 용어 설명</div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge badge-merc">용병</span></span>
+          <span class="term-desc">공대에 고용된 멤버. 분배 대상이지만 고정금액 또는 정규멤버 기준 % 로 별도 지급 설정 가능.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge badge-alba">알바</span></span>
+          <span class="term-desc">용병과 동일한 구조. 구분이 필요할 때 사용. 지급 방식 별도 설정 가능.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge badge-guest">손님</span></span>
+          <span class="term-desc">아이템(예: 혼테일 목걸이)을 먹으러 오는 외부인. 분배 대상이 아니며, 지불한 금액이 분배 풀에 합산됨.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge badge-recruiter">손님구인</span></span>
+          <span class="term-desc">손님을 모집해온 멤버. 손님 1명당 설정된 인센 금액을 추가로 수령.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge badge-seller">판매자</span></span>
+          <span class="term-desc">드랍템 판매를 담당하는 멤버. 판매 순수익의 설정된 % 를 인센으로 수령.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge" style="background:#f0e8ff;color:#6a1b9a;border:1px solid #ce93d8;">공대지출</span></span>
+          <span class="term-desc">알버프, 영혼의메아리 등 공대가 함께 사용한 비용. 분배 풀에서 먼저 차감됨.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge"><span class="badge" style="background:#f3e8ff;color:#6a1b9a;border:1px solid #ce93d8;">지원금</span></span>
+          <span class="term-desc">보마 지원금, 갠유 비숍 지원금 등. 분배 풀에서 먼저 차감 후 해당 멤버에게 별도 지급. 멤버 관리에서 지원금 체크 후 금액 설정.</span>
+        </div>
+        <div class="term-row">
+          <span class="term-badge" style="font-size:11px;color:var(--red2);font-weight:800;">패널티</span>
+          <span class="term-desc">사망, 노쇼 등 제재 금액. 고정금액 또는 기본 분배금의 % 차감. 차감액은 패널티 없는 멤버에게 균등 분배. 용병/알바도 동일 적용.</span>
+        </div>
+      </div>
+
+      <!-- 계산 방식 -->
+      <div class="card">
+        <div class="card-title">🧮 계산 방식 요약</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.9;">
+          <b>① 분배 풀 계산</b><br>
+          드랍 순수익 + 손님 지불 실수령 − 판매자 인센 − 손님구인 인센 − 용병/알바 고정지급 − 공대지출 − 지원금 합계<br><br>
+          <b>② 기본 1인당 = 분배 풀 ÷ 참여 인원수</b><br><br>
+          <b>③ 패널티 적용 (용병/알바 포함)</b><br>
+          패널티 있는 멤버: 기본금 − 패널티 (금액 + 기본금×%)<br>
+          패널티 없는 멤버: 기본금 + (패널티 총액 ÷ 무패널티 인원)<br><br>
+          <b>④ 추가 인센 적용</b><br>
+          판매자 인센, 손님구인 인센, 용병/알바 % 지급 추가<br><br>
+          <b>⑤ 지원금 멤버</b><br>
+          지원금으로 체크된 멤버는 기본 분배금 + 패널티/보너스 + 지원금을 함께 수령. 지원금은 분배 풀에서 선차감 후 해당 멤버에게 추가 지급됩니다.<br><br>
+          <b>⑥ 손님 지불금</b><br>
+          손님이 낸 금액도 드랍템처럼 수수료 차감 후 실수령액이 분배 풀에 합산됩니다.
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="card">
+        <div class="card-title">❓ 자주 묻는 질문</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8;">
+          <b>Q. 다른 컴퓨터에서 쓰고 싶어요.</b><br>
+          A. 백업 저장으로 JSON 파일 받아서 옮기세요.<br><br>
+          <b>Q. 파일을 새로 받으면 데이터가 사라지나요?</b><br>
+          A. 네! 반드시 백업 저장 후 새 파일에서 불러오기 하세요.<br><br>
+          <b>Q. 잘못 저장한 회차는 어떻게 삭제하나요?</b><br>
+          A. 분배 결과 탭에서 해당 회차 선택 후 🗑️ 삭제 버튼을 클릭하세요.<br><br>
+          <b>Q. 지원금은 어떻게 설정하나요?</b><br>
+          A. 공대 설정 → 멤버 관리에서 해당 멤버에 지원금 체크 → 지원금 설정 섹션에서 금액 입력.<br><br>
+          <b>Q. 용병한테도 패널티가 적용되나요?</b><br>
+          A. 네! 용병/알바도 패널티 및 무패널티 보너스가 동일하게 적용됩니다.<br><br>
+          <b>Q. 용병이랑 알바 차이가 뭔가요?</b><br>
+          A. 기능은 동일해요. 구분이 필요할 때 라벨만 다르게 씁니다.<br><br>
+          <b>Q. 업데이트/버그 문의는요?</b><br>
+          A. 인게임 <b style="color:#2255aa;">fourcard</b> 로 친추 후 문의해주세요! 🙏
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 탭1: 공대 설정 ═══ -->
+<div class="screen" id="screen-1">
+  <div class="backup-bar">
+    💾 데이터는 이 브라우저에 저장됩니다. 주기적으로 백업을 권장해요!
+    <button class="btn warning" onclick="exportData()" style="margin-left:auto;">📥 백업 저장</button>
+    <button class="btn" onclick="importData()">📤 백업 불러오기</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="loadImport(event)">
+  </div>
+  <!-- 날짜별 설정 관리 바 -->
+  <div style="display:flex;gap:8px;align-items:center;background:#e8f4ff;border:1.5px solid var(--border2);border-radius:var(--radius2);padding:10px 14px;margin-bottom:14px;flex-wrap:wrap;">
+    <span style="font-size:13px;font-weight:700;color:#2255aa;white-space:nowrap;">📅 회차 날짜별 공대 설정</span>
+    <input type="date" id="cfgSnapshotDate" style="flex:1;min-width:140px;max-width:200px;" onchange="onCfgDateChange(this.value)">
+    <button class="btn primary" onclick="saveCfgSnapshot()" style="padding:6px 14px;">💾 이 날짜로 설정 저장</button>
+    <button class="btn" onclick="loadCfgSnapshot()" style="padding:6px 14px;">📂 불러오기</button>
+    <span id="cfgSnapshotStatus" style="font-size:11px;color:var(--text2);"></span>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-title">기본 설정</div>
+        <div class="field-row"><span class="field-label">공대 이름</span><input type="text" id="guildName" placeholder="ex) 표식공대" style="flex:1;"></div>
+        <div class="field-row">
+          <span class="field-label">판매자 인센</span>
+          <input type="number" id="sellerPct" min="0" max="100" step="0.1" placeholder="5" style="width:70px;flex:none;">
+          <span style="font-size:12px;color:var(--text2);">% (순수익 기준)</span>
+        </div>
+        <div class="field-row">
+          <span class="field-label">손님구인 인센</span>
+          <input type="number" id="guestIncentive" min="0" placeholder="150" style="width:80px;flex:none;">
+          <span style="font-size:12px;color:var(--text2);">만메소 / 1명</span>
+        </div>
+        <button class="btn primary" onclick="saveSettings()" style="margin-top:6px;">✅ 설정 저장</button>
+        <div class="divider"></div>
+        <div class="section-label">현재 역할 담당자</div>
+        <div class="role-info-box" id="roleInfoBox"><div style="color:var(--text3);font-size:12px;">멤버를 추가하면 표시됩니다.</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">패널티 항목 설정</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:8px;">💡 금액(만)과 %(퍼센트) 하나 또는 둘 다 입력 가능. 퍼센트는 해당 멤버 기본 분배금 기준 차감.</div>
+        <div id="penaltyList"></div>
+        <div class="divider"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center;">
+          <input type="text" id="newPenaltyName" placeholder="항목명 (예: 1페 사망)" style="flex:2;min-width:100px;">
+          <input type="number" id="newPenaltyAmt" placeholder="금액(만)" style="width:80px;flex:none;" min="0">
+          <input type="number" id="newPenaltyPct" placeholder="%" class="pen-pct-input" min="0" max="100" step="0.1">
+          <span style="font-size:12px;color:var(--text2);flex:none;">%</span>
+          <button class="btn primary" onclick="addPenalty()">+ 추가</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🛡️ 용병 & 알바 설정</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:8px;">💡 고정금액: 분배 풀에서 선차감 | 퍼센트: 정규멤버 1인당 분배금 × % 지급 (패널티/보너스 별도 적용)</div>
+        <div id="mercAlbaList"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">💝 지원금 설정</div>
+        <div style="font-size:11px;color:var(--text2);margin-bottom:8px;">💡 보마 지원금, 갠유 비숍 지원금 등. 분배 풀에서 먼저 차감 후 해당 멤버에게 지급됩니다.</div>
+        <div id="supportList"></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px;">※ 지원금으로 체크된 멤버가 없으면 목록이 비어있습니다.</div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card" style="min-height:300px;">
+        <div class="card-title">👥 멤버 관리</div>
+        <div class="stat-wrap" id="memberStatWrap"></div>
+        <div id="memberList"></div>
+        <div class="divider"></div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+          <input type="text" id="newMemberName" placeholder="닉네임" style="flex:1;min-width:80px;">
+          <select id="newMemberJob" style="flex:1;min-width:90px;">
+            <option value="">직업 선택</option>
+            <option>다크나이트</option><option>비숍</option><option>히어로</option>
+            <option>섀도어</option><option>나로</option><option>보마</option>
+            <option>손님</option><option>기타</option>
+          </select>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:8px;align-items:center;">
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:var(--text2);cursor:pointer;"><input type="checkbox" id="newMemberMerc" class="chk"> 용병</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:#bf360c;cursor:pointer;"><input type="checkbox" id="newMemberAlba" class="chk" style="accent-color:#ff7043;"> 알바</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:#1b5e20;cursor:pointer;"><input type="checkbox" id="newMemberSeller" class="chk" style="accent-color:#4caf50;"> 판매자</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:#6a1b9a;cursor:pointer;"><input type="checkbox" id="newMemberRecruiter" class="chk" style="accent-color:#9c27b0;"> 손님구인</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px;color:#6a1b9a;cursor:pointer;"><input type="checkbox" id="newMemberSupport" class="chk" style="accent-color:#ab47bc;"> 지원금</label>
+          <button class="btn primary" onclick="addMember()" style="margin-left:auto;">+ 추가</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 탭2: 원정대 입력 ═══ -->
+<div class="screen" id="screen-2">
+  <div class="row">
+    <div class="col" style="flex:0.85;">
+      <div class="card">
+        <div class="card-title">회차 정보</div>
+        <div class="field-row"><span class="field-label">날짜</span><input type="date" id="raidDate" style="flex:1;" onchange="onRaidDateChange(this.value)"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">🧑‍🤝‍🧑 참여 멤버</div>
+        <div id="participantList"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">패널티 입력</div>
+        <div id="penaltyInputList"></div>
+      </div>
+    </div>
+
+    <div class="col" style="flex:1.5;">
+      <!-- 드랍템 -->
+      <div class="card">
+        <div class="card-title">⚔️ 드랍템</div>
+        <div style="overflow-x:auto;">
+          <table class="tbl"><thead><tr>
+            <th>아이템명</th><th>판매금액(만)</th><th>거래방식</th><th>수작</th><th>수수료</th><th>실수령</th><th>판매자</th><th>판매상태</th><th></th>
+          </tr></thead><tbody id="dropBody"></tbody></table>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;">
+          <input type="text" id="itemName" placeholder="아이템명" style="flex:1.5;min-width:90px;">
+          <input type="number" id="itemPrice" placeholder="금액(만)" style="flex:1;min-width:70px;" oninput="updateFeePreview()">
+          <select id="itemTrade" style="flex:1;min-width:60px;" onchange="updateFeePreview()">
+            <option value="택배">택배</option><option value="교환">교환</option><option value="상점판매">상점판매</option>
+          </select>
+          <select id="itemNote" style="flex:1;min-width:70px;" onchange="updateFeePreview()">
+            <option value="노수작">노수작</option><option value="99수작">99수작</option>
+            <option value="499수작">499수작</option><option value="999수작">999수작</option><option value="2499수작">2499수작</option>
+          </select>
+          <span id="feePreview" style="font-size:11px;color:var(--red2);min-width:70px;"></span>
+          <div class="seller-combo">
+            <input type="text" id="itemSellerInput" placeholder="판매자" autocomplete="off"
+              oninput="onSellerInput()" onfocus="onSellerFocus()" onblur="onSellerBlur()">
+            <div class="seller-dropdown" id="sellerDropdown"></div>
+          </div>
+          <select id="itemStatus" style="flex:1;min-width:70px;">
+            <option value="판매완료">판매완료</option><option value="판매중">판매중</option>
+          </select>
+          <button class="btn primary" onclick="addItem()">+ 추가</button>
+        </div>
+      </div>
+
+      <!-- 손님 지불 금액 (수수료 포함) -->
+      <div class="card">
+        <div class="card-title">🙋 손님 지불 금액</div>
+        <div style="overflow-x:auto;">
+          <table class="tbl guest-tbl"><thead><tr>
+            <th>손님</th><th>아이템</th><th>지불금액(만)</th><th>거래방식</th><th>수작</th><th>수수료</th><th>실수령</th><th>손님구인자</th><th></th>
+          </tr></thead><tbody id="guestPayBody"></tbody></table>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;">
+          <input type="text" id="guestPayName" placeholder="손님 닉네임" style="flex:1;min-width:70px;">
+          <input type="text" id="guestPayItem" placeholder="아이템명" style="flex:1.2;min-width:80px;">
+          <input type="number" id="guestPayAmt" placeholder="금액(만)" style="flex:1;min-width:70px;" oninput="updateGuestFeePreview()">
+          <select id="guestPayTrade" style="flex:1;min-width:60px;" onchange="updateGuestFeePreview()">
+            <option value="택배">택배</option><option value="교환">교환</option><option value="상점판매">상점판매</option>
+          </select>
+          <select id="guestPayNote" style="flex:1;min-width:70px;" onchange="updateGuestFeePreview()">
+            <option value="노수작">노수작</option><option value="99수작">99수작</option>
+            <option value="499수작">499수작</option><option value="999수작">999수작</option><option value="2499수작">2499수작</option>
+          </select>
+          <span id="guestFeePreview" style="font-size:11px;color:var(--red2);min-width:70px;"></span>
+          <div class="seller-combo">
+            <input type="text" id="guestRecruiterInput" placeholder="손님구인자" autocomplete="off"
+              oninput="onRecruiterInput()" onfocus="onRecruiterFocus()" onblur="onRecruiterBlur()">
+            <div class="seller-dropdown" id="recruiterDropdown"></div>
+          </div>
+          <button class="btn primary" onclick="addGuestPay()" style="background:linear-gradient(135deg,#f48fb1,#e91e63);border-color:#c2185b;">+ 추가</button>
+        </div>
+        <div style="font-size:11px;color:var(--text2);margin-top:6px;">💡 손님 실수령액(수수료 차감 후)이 분배 풀에 합산됩니다.</div>
+      </div>
+
+      <!-- 공대 지출 -->
+      <div class="card">
+        <div class="card-title">💸 공대 지출</div>
+        <div style="overflow-x:auto;">
+          <table class="tbl cost-tbl"><thead><tr>
+            <th>항목명</th><th>금액(만)</th><th></th>
+          </tr></thead><tbody id="costBody"></tbody></table>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px;align-items:center;">
+          <input type="text" id="costName" placeholder="항목명 (예: 알버프, 영혼의메아리)" style="flex:2;">
+          <input type="number" id="costAmt" placeholder="금액(만)" style="flex:1;min-width:80px;">
+          <button class="btn primary" onclick="addCost()" style="background:linear-gradient(135deg,#c084fc,#9c27b0);border-color:#7b1fa2;">+ 추가</button>
+        </div>
+        <div style="font-size:11px;color:var(--text2);margin-top:6px;">💡 공대가 함께 쓴 비용. 분배 풀에서 먼저 차감됩니다.</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📝 회차 메모</div>
+        <textarea id="raidMemo" placeholder="이번 회차 특이사항, 메모 등 자유롭게 입력하세요." style="width:100%;min-height:70px;font-family:'Nanum Gothic',sans-serif;font-size:13px;padding:8px 10px;border:2px solid var(--border);border-radius:var(--radius2);background:var(--sky2);color:var(--text);resize:vertical;outline:none;" onfocus="this.style.borderColor='#4da6ff';this.style.background='white'" onblur="this.style.borderColor='var(--border)';this.style.background='var(--sky2)'"></textarea>
+      </div>
+      <div style="text-align:center;margin-top:4px;">
+        <button class="btn success" style="font-size:15px;padding:10px 36px;" onclick="saveRaid()">💾 이 회차 저장</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 탭3: 분배 결과 ═══ -->
+<div class="screen" id="screen-3">
+  <!-- 히스토리 선택 바 -->
+  <div class="raid-select-bar">
+    <span style="font-size:13px;font-weight:700;color:#2255aa;white-space:nowrap;">📋 회차 선택</span>
+    <select id="raidSelectDropdown" onchange="onRaidSelect(this.value)" style="flex:1;">
+      <option value="">저장된 회차가 없습니다</option>
+    </select>
+    <button class="btn danger" onclick="deleteCurrentRaid()" style="padding:6px 12px;white-space:nowrap;">🗑️ 삭제</button>
+  </div>
+  <div class="info-box" id="resultInfo">저장된 회차를 선택하거나, 원정대 입력 후 저장하면 결과가 표시됩니다.</div>
+  <div id="resultArea" style="display:none;">
+    <div class="metrics" id="resultMetrics"></div>
+    <!-- 드랍템 현황 -->
+    <div class="card" id="resultDropCard">
+      <div class="card-title">⚔️ 드랍템 현황</div>
+      <div style="overflow-x:auto;">
+        <table class="tbl" id="resultDropTable">
+          <thead><tr>
+            <th>아이템명</th><th>판매금액</th><th>거래방식</th><th>수작</th><th>수수료</th><th>실수령</th><th>판매상태</th>
+          </tr></thead>
+          <tbody id="resultDropBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col" style="flex:1.3;">
+        <div class="card">
+          <div class="card-title">멤버별 최종 분배금</div>
+          <div id="resultMemberList"></div>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+            <button class="btn success" onclick="saveSettledState()" style="flex:1;">💾 정산현황 저장</button>
+            <button class="btn warning" onclick="exportResultAsJpg()" style="flex:1;">📷 JPG 저장</button>
+          </div>
+        </div>
+        <div class="card" id="resultMemoCard" style="display:none;">
+          <div class="card-title">📝 회차 메모</div>
+          <div id="resultMemoDisplay" style="font-size:13px;color:var(--text2);white-space:pre-wrap;line-height:1.6;"></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-title">계산 상세</div>
+          <div id="resultDetail"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 탭4: 통계 & 히스토리 ═══ -->
+<div class="screen" id="screen-4">
+  <div style="display:flex;justify-content:flex-end;margin-bottom:10px;">
+    <button class="btn warning" onclick="exportStatsAsJpg()">📷 JPG 저장</button>
+  </div>
+  <div id="statsContent" style="background:linear-gradient(160deg,#c8eeff 0%,#e8f7ff 40%,#d4f5e0 80%,#ffe8f0 100%);padding:12px;border-radius:12px;">
+  <div class="metrics" id="statMetrics"></div>
+  <div class="row">
+    <div class="col" style="flex:1.2;">
+      <div class="card">
+        <div class="card-title">회차 히스토리</div>
+        <div style="display:flex;gap:6px;margin-bottom:10px;">
+          <select id="filterPeriod" onchange="renderHistory()" style="flex:1;">
+            <option value="all">전체</option><option value="week">이번 주</option><option value="month">이번 달</option>
+          </select>
+        </div>
+        <div id="historyList"></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-title">멤버별 누적 수령액</div>
+        <div id="memberStatBars"></div>
+      </div>
+      <div class="card" style="margin-top:14px;">
+        <div class="card-title">패널티 이력</div>
+        <div id="penaltyHistory"></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+</div><!-- /main -->
+<div class="footer" id="footerDate">🌊 마지막 업데이트: 2026.04.10 · 문의사항 디스코드 j_son1993 🌊</div>
+
+<!-- 업데이트 팝업 -->
+<div id="updatePopup" style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9998;display:none;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(47,184,200,0.2);width:100%;max-width:440px;overflow:hidden;margin:20px;display:flex;flex-direction:column;max-height:90vh;">
+    <div style="background:linear-gradient(120deg,#4dd4de,#2fb8c8);padding:16px 20px;display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <span style="font-size:22px;">🌊</span>
+      <div>
+        <div style="font-family:'Jua',sans-serif;font-size:17px;color:#fff;">분배금 계산기 업데이트</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.85);margin-top:2px;">분배금 계산기를 클릭하면 언제든 확인 가능해요!</div>
+      </div>
+    </div>
+    <div style="padding:16px 20px;overflow-y:auto;flex:1;">
+
+      <!-- 2026.04.10 최신 -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="background:#4dd4de;color:#fff;font-family:'Jua',sans-serif;font-size:11px;padding:3px 10px;border-radius:20px;">2026.04.10 최신</span>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>⚙️ 공대 설정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#e0fff0;color:#2e8b57;border:1px solid #a0d8b0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>멤버 닉네임 직접 수정 기능 추가</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#fff8e0;color:#c08020;border:1px solid #f0d880;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 멤버 분배 인원 자동 제외 (엑셀과 동일한 계산)</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>📝 정산 입력</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#e0fff0;color:#2e8b57;border:1px solid #a0d8b0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>날짜 선택 시 저장된 회차 자동 불러오기</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#e0fff0;color:#2e8b57;border:1px solid #a0d8b0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>거래방식에 상점판매 추가 (수수료 0원)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#e0fff0;color:#2e8b57;border:1px solid #a0d8b0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>2,499수작 추가 (수수료율 0.04%)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#e8f0ff;color:#4060c0;border:1px solid #a0b8f0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">개선</span>비고(수작) → 수작 명칭 변경</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#e8f0ff;color:#4060c0;border:1px solid #a0b8f0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">개선</span>판매완료 항목도 금액·방식·수작 수정 가능</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🎨 디자인</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#e8f0ff;color:#4060c0;border:1px solid #a0b8f0;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">개선</span>여름 바다 파스텔 계열로 전체 디자인 변경</div>
+      </div>
+
+      <!-- 구분선 -->
+      <div style="display:flex;align-items:center;gap:8px;margin:12px 0 10px;">
+        <div style="flex:1;height:1px;background:#d8f5f8;"></div>
+        <span style="font-size:11px;color:#b0c8d0;font-family:'Jua',sans-serif;">이전 업데이트</span>
+        <div style="flex:1;height:1px;background:#d8f5f8;"></div>
+      </div>
+
+      <!-- 2026.04.09 이전 -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="background:#f0fbff;color:#2fb8c8;border:1px solid #c8f0f5;font-family:'Jua',sans-serif;font-size:11px;padding:3px 10px;border-radius:20px;">2026.04.09</span>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>⚙️ 공대 설정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>멤버별 역할 설정 (판매자·용병·알바·손님구인·지원금)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>회차 날짜별 공대설정 저장 & 불러오기</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>용병·알바 고정금액/퍼센트 지급방식 개별 설정</div>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>📝 정산 입력</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>참여 멤버 전체선택 기능 & 참여 인원 실시간 표시</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>회차별 메모 저장 기능 추가</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">NEW</span>분배 결과 JPG 저장 버튼 추가</div>
+      </div>
+      <div>
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🎨 디자인</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">개선</span>초기 버전 배포 (이전 엑셀 → 웹 계산기로 전환)</div>
+      </div>
+
+    </div>
+    <div style="padding:12px 20px;border-top:1.5px solid #d8f5f8;display:flex;align-items:center;justify-content:space-between;background:#f8fdff;flex-shrink:0;">
+      <span onclick="dismissUpdatePopup(true)" style="font-size:11px;color:#b0c8d0;cursor:pointer;text-decoration:underline;">오늘 하루 보지 않기</span>
+      <button onclick="dismissUpdatePopup(false)" style="background:#4dd4de;color:#fff;border:none;border-radius:20px;padding:9px 24px;font-family:'Jua',sans-serif;font-size:13px;cursor:pointer;">확인</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  데이터
+// ══════════════════════════════════════════
+let cfg={
+  guildName:'',sellerPct:5,guestIncentive:150,
+  penalties:[
+    {id:1,name:'1페 사망',amount:500,pct:0},{id:2,name:'2페 사망',amount:300,pct:0},
+    {id:3,name:'3회이상 사망',amount:200,pct:0},{id:4,name:'노쇼',amount:1000,pct:0},{id:5,name:'지각',amount:100,pct:0},
+  ],
+  mercAlbaSettings:{},supportSettings:{},members:[],nextPenaltyId:6,nextMemberId:1,
+};
+// 날짜별 공대 설정 스냅샷 저장소
+let cfgSnapshots={}; // { '2026-04-08': {...cfg} }
+let raids=[];
+let cur={date:'',participants:[],items:[],guestPays:[],costs:[],penaltyMap:{}};
+let viewingRaidIdx=-1;
+
+// ══════════════════════════════════════════
+//  localStorage
+// ══════════════════════════════════════════
+function save(){
+  localStorage.setItem('mpl_cfg',JSON.stringify(cfg));
+  localStorage.setItem('mpl_raids',JSON.stringify(raids));
+  localStorage.setItem('mpl_cfgSnapshots',JSON.stringify(cfgSnapshots));
+}
+function load(){
+  try{
+    const c=localStorage.getItem('mpl_cfg');
+    if(c){cfg=JSON.parse(c);cfg.penalties=cfg.penalties.map(p=>({...p,pct:p.pct||0}));if(!cfg.mercAlbaSettings)cfg.mercAlbaSettings={};if(!cfg.supportSettings)cfg.supportSettings={};}
+    const r=localStorage.getItem('mpl_raids');
+    if(r){raids=JSON.parse(r);raids.forEach(raid=>{if(!raid.settledMap)raid.settledMap={};});}
+    const s=localStorage.getItem('mpl_cfgSnapshots');
+    if(s)cfgSnapshots=JSON.parse(s);
+  }catch(e){}
+}
+function exportData(){
+  const blob=new Blob([JSON.stringify({cfg,raids},null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='분배금백업_'+new Date().toISOString().slice(0,10)+'.json';a.click();
+}
+function importData(){document.getElementById('importFile').click();}
+function loadImport(e){
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=ev=>{try{const d=JSON.parse(ev.target.result);if(d.cfg)cfg=d.cfg;if(d.raids)raids=d.raids;save();renderAll();alert('✅ 백업 불러오기 완료!');}catch{alert('❌ 파일을 읽을 수 없어요.');}};
+  reader.readAsText(file);e.target.value='';
+}
+
+// ══════════════════════════════════════════
+//  수수료 계산
+// ══════════════════════════════════════════
+const FEE_BRACKETS=[
+  {min:10000,exchange:0.06,delivery:0.07},{min:2500,exchange:0.05,delivery:0.06},
+  {min:1000,exchange:0.04,delivery:0.05},{min:500,exchange:0.03,delivery:0.04},
+  {min:100,exchange:0.018,delivery:0.027},{min:10,exchange:0.008,delivery:0.012},{min:0,exchange:0,delivery:0},
+];
+function getRate(price,trade){const b=FEE_BRACKETS.find(b=>price>=b.min);return trade==='택배'?b.delivery:b.exchange;}
+const NOTE_UNIT={'노수작':0,'99수작':99,'499수작':499,'2499수작':2499,'999수작':999};
+function calcFee(price,trade,note){
+  if(trade==='상점판매')return 0;
+  if(trade==='택배')return Math.round(price*getRate(price,'택배')*10)/10;
+  const unit=NOTE_UNIT[note];
+  if(!unit)return Math.round(price*getRate(price,'교환')*10)/10;
+  let fee=0,remaining=price;
+  for(let i=0;i<Math.ceil(price/unit);i++){const chunk=Math.min(unit,remaining);fee+=chunk*getRate(chunk,'교환');remaining-=chunk;}
+  return Math.round(fee*10)/10;
+}
+function updateFeePreview(){
+  const price=parseFloat(document.getElementById('itemPrice').value)||0;
+  const trade=document.getElementById('itemTrade').value;
+  const note=document.getElementById('itemNote').value;
+  if(!price){document.getElementById('feePreview').textContent='';return;}
+  document.getElementById('feePreview').textContent=`수수료 -${fmt(calcFee(price,trade,note))}만`;
+}
+function updateGuestFeePreview(){
+  const price=parseFloat(document.getElementById('guestPayAmt').value)||0;
+  const trade=document.getElementById('guestPayTrade').value;
+  const note=document.getElementById('guestPayNote').value;
+  if(!price){document.getElementById('guestFeePreview').textContent='';return;}
+  document.getElementById('guestFeePreview').textContent=`수수료 -${fmt(calcFee(price,trade,note))}만`;
+}
+
+// ══════════════════════════════════════════
+//  유틸
+// ══════════════════════════════════════════
+function fmt(n){
+  if(n===undefined||n===null||isNaN(n))return'0';
+  const v=parseFloat(n.toFixed(1));
+  const abs=Math.abs(v);
+  const sign=v<0?'-':'';
+  if(abs>=10000){
+    const uk=Math.floor(abs/10000);
+    const rem=Math.round((abs%10000)*10)/10;
+    if(rem===0)return sign+uk+'억';
+    return sign+uk+'억'+rem.toLocaleString('ko-KR');
+  }
+  return v.toLocaleString('ko-KR');
+}
+function noteClass(note){return{'99수작':'badge-99','499수작':'badge-499','999수작':'badge-999','노수작':'badge-no'}[note]||'badge-no';}
+function getMember(id){return cfg.members.find(m=>m.id==id);}
+function getMemberByName(name){return cfg.members.find(m=>m.name===name);}
+function getAvatar(name){return name?name[0]:'?';}
+function avatarClass(m){
+  if(!m)return'';
+  if(m.job==='손님')return'guest';
+  if(m.isSeller)return'seller';
+  if(m.isRecruiter)return'recruiter';
+  if(m.isAlba)return'alba';
+  if(m.isMerc)return'merc';
+  return'';
+}
+function isMercOrAlba(m){return m&&(m.isMerc||m.isAlba)&&m.job!=='손님';}
+function tradeBadge(trade){return trade==='택배'?'background:#fff8e0;color:#c08020;border:1.5px solid #f0d880':'background:#e8f4ff;color:#2255aa;border:1px solid #90c8f0';}
+
+// ══════════════════════════════════════════
+//  콤보박스
+// ══════════════════════════════════════════
+let sellerBlurT=null,recruiterBlurT=null;
+function getParticipantNames(){return cur.participants.map(id=>getMember(id)).filter(Boolean).map(m=>m.name);}
+function renderDDList(ddId,names,fn){
+  const dd=document.getElementById(ddId);
+  if(!names.length){dd.classList.remove('open');return;}
+  dd.innerHTML=names.map(n=>`<div class="seller-option" onmousedown="${fn}('${n.replace(/'/g,"\\'")}'">${n}</div>`).join('');
+  dd.classList.add('open');
+}
+function onSellerInput(){const v=document.getElementById('itemSellerInput').value.trim().toLowerCase();const n=getParticipantNames();renderDDList('sellerDropdown',v?n.filter(x=>x.toLowerCase().includes(v)):n,'selectSeller');}
+function onSellerFocus(){clearTimeout(sellerBlurT);renderDDList('sellerDropdown',getParticipantNames(),'selectSeller');}
+function onSellerBlur(){sellerBlurT=setTimeout(()=>document.getElementById('sellerDropdown').classList.remove('open'),200);}
+function selectSeller(name){document.getElementById('itemSellerInput').value=name;document.getElementById('sellerDropdown').classList.remove('open');}
+function onRecruiterInput(){const v=document.getElementById('guestRecruiterInput').value.trim().toLowerCase();const n=getParticipantNames();renderDDList('recruiterDropdown',v?n.filter(x=>x.toLowerCase().includes(v)):n,'selectRecruiter');}
+function onRecruiterFocus(){clearTimeout(recruiterBlurT);renderDDList('recruiterDropdown',getParticipantNames(),'selectRecruiter');}
+function onRecruiterBlur(){recruiterBlurT=setTimeout(()=>document.getElementById('recruiterDropdown').classList.remove('open'),200);}
+function selectRecruiter(name){document.getElementById('guestRecruiterInput').value=name;document.getElementById('recruiterDropdown').classList.remove('open');}
+
+// ══════════════════════════════════════════
+//  탭 전환
+// ══════════════════════════════════════════
+function showTab(i){
+  document.querySelectorAll('.tab-btn').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.screen').forEach((s,j)=>s.classList.toggle('active',i===j));
+  if(i===2)renderRaidInput();
+  if(i===3){renderRaidSelectDropdown();renderResult();}
+  if(i===4)renderStats();
+}
+
+// ══════════════════════════════════════════
+//  탭1: 공대 설정
+// ══════════════════════════════════════════
+function renderSettings(){
+  // 날짜 초기화 - 오늘 날짜로
+  const dateEl=document.getElementById('cfgSnapshotDate');
+  if(dateEl&&!dateEl.value)dateEl.value=new Date().toISOString().slice(0,10);
+  onCfgDateChange(dateEl?.value||'');
+  document.getElementById('guildName').value=cfg.guildName;
+  document.getElementById('sellerPct').value=cfg.sellerPct;
+  document.getElementById('guestIncentive').value=cfg.guestIncentive;
+  renderPenaltyList();renderMercAlbaSettings();renderSupportSettings();renderMemberList();renderRoleInfo();
+}
+
+// 날짜 변경 시 해당 날짜 스냅샷 존재 여부 표시
+function onCfgDateChange(date){
+  const statusEl=document.getElementById('cfgSnapshotStatus');
+  if(!statusEl)return;
+  if(!date){statusEl.textContent='';return;}
+  if(cfgSnapshots[date]){
+    statusEl.textContent=`✅ ${date} 저장된 설정 있음`;
+    statusEl.style.color='#2e7d32';
+  } else {
+    statusEl.textContent=`📝 ${date} 저장된 설정 없음`;
+    statusEl.style.color='var(--text3)';
+  }
+}
+
+// 현재 설정을 선택한 날짜로 저장
+function saveCfgSnapshot(){
+  const date=document.getElementById('cfgSnapshotDate').value;
+  if(!date){alert('날짜를 선택해주세요.');return;}
+  cfgSnapshots[date]=JSON.parse(JSON.stringify(cfg));
+  save();
+  onCfgDateChange(date);
+  alert(`✅ ${date} 공대 설정이 저장되었습니다!`);
+}
+
+// 선택한 날짜의 설정 불러오기
+function loadCfgSnapshot(){
+  const date=document.getElementById('cfgSnapshotDate').value;
+  if(!date){alert('날짜를 선택해주세요.');return;}
+  if(!cfgSnapshots[date]){alert(`${date}에 저장된 설정이 없습니다.`);return;}
+  if(!confirm(`${date} 설정으로 불러올까요? 현재 설정이 바뀝니다.`))return;
+  cfg={...cfgSnapshots[date]};
+  if(!cfg.mercAlbaSettings)cfg.mercAlbaSettings={};
+  if(!cfg.supportSettings)cfg.supportSettings={};
+  save();
+  renderSettings();
+  renderRaidInput();
+  alert(`✅ ${date} 설정을 불러왔습니다!`);
+}
+
+// 정산 입력 탭 날짜 변경 시 해당 날짜 설정 자동 적용
+function onRaidDateChange(date){
+  document.getElementById('raidDate').value=date;
+  cur.date=date;
+  // 해당 날짜 저장된 회차 자동 불러오기
+  const existingIdx=raids.findIndex(r=>r.date===date);
+  if(existingIdx>=0){
+    const r=raids[existingIdx];
+    cur.participants=[...(r.participants||[])];
+    cur.items=JSON.parse(JSON.stringify(r.items||[]));
+    cur.guestPays=JSON.parse(JSON.stringify(r.guestPays||[]));
+    cur.costs=JSON.parse(JSON.stringify(r.costs||[]));
+    cur.penaltyMap={...(r.penaltyMap||{})};
+    cur.memo=r.memo||'';
+    document.getElementById('raidMemo').value=cur.memo||'';
+    renderParticipants();renderPenaltyInputs();renderDropTable();renderGuestPayTable();renderCostTable();
+    showTab(2);
+    return;
+  }
+  // 해당 날짜 공대설정 스냅샷 확인
+  if(date&&cfgSnapshots[date]){
+    if(confirm(`${date}에 저장된 공대 설정이 있어요. 불러올까요?`)){
+      cfg={...cfgSnapshots[date]};
+      if(!cfg.mercAlbaSettings)cfg.mercAlbaSettings={};
+      if(!cfg.supportSettings)cfg.supportSettings={};
+      renderParticipants();renderPenaltyInputs();
+    }
+  }
+}
+function renderRoleInfo(){
+  const el=document.getElementById('roleInfoBox');
+  const sellers=cfg.members.filter(m=>m.isSeller);
+  const recruiters=cfg.members.filter(m=>m.isRecruiter);
+  const mercs=cfg.members.filter(m=>m.isMerc&&!m.isAlba&&m.job!=='손님');
+  const albas=cfg.members.filter(m=>m.isAlba&&m.job!=='손님');
+  const supports=cfg.members.filter(m=>m.isSupport);
+  const guests=cfg.members.filter(m=>m.job==='손님');
+  if(!sellers.length&&!recruiters.length&&!mercs.length&&!albas.length&&!supports.length&&!guests.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">역할이 지정된 멤버가 없습니다.</div>';return;}
+  let html='';
+  if(sellers.length)html+=`<div class="role-info-row"><span class="role-info-label">🟢 판매자</span>${sellers.map(m=>`<span class="badge badge-seller">${m.name}</span>`).join(' ')}</div>`;
+  if(recruiters.length)html+=`<div class="role-info-row"><span class="role-info-label">🟣 손님구인</span>${recruiters.map(m=>`<span class="badge badge-recruiter">${m.name}</span>`).join(' ')}</div>`;
+  if(mercs.length)html+=`<div class="role-info-row"><span class="role-info-label">🟡 용병</span>${mercs.map(m=>`<span class="badge badge-merc">${m.name}</span>`).join(' ')}</div>`;
+  if(albas.length)html+=`<div class="role-info-row"><span class="role-info-label">🟠 알바</span>${albas.map(m=>`<span class="badge badge-alba">${m.name}</span>`).join(' ')}</div>`;
+  if(supports.length)html+=`<div class="role-info-row"><span class="role-info-label">💝 지원금</span>${supports.map(m=>`<span class="badge" style="background:#f3e8ff;color:#6a1b9a;border:1px solid #ce93d8;">${m.name}</span>`).join(' ')}</div>`;
+  if(guests.length)html+=`<div class="role-info-row"><span class="role-info-label">🔴 손님</span>${guests.map(m=>`<span class="badge badge-guest">${m.name}</span>`).join(' ')}</div>`;
+  el.innerHTML=html;
+}
+function renderPenaltyList(){
+  const el=document.getElementById('penaltyList');
+  if(!cfg.penalties.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">패널티 항목이 없습니다.</div>';return;}
+  el.innerHTML=cfg.penalties.map(p=>`
+    <div class="field-row" style="flex-wrap:wrap;">
+      <input type="text" value="${p.name}" onchange="updatePenaltyName(${p.id},this.value)" style="flex:1.5;min-width:100px;">
+      <input type="number" value="${p.amount||0}" onchange="updatePenaltyAmt(${p.id},this.value)" placeholder="금액(만)" style="width:78px;flex:none;" min="0">
+      <span style="font-size:11px;color:var(--text2);flex:none;">만</span>
+      <input type="number" value="${p.pct||0}" onchange="updatePenaltyPct(${p.id},this.value)" placeholder="%" class="pen-pct-input" min="0" max="100" step="0.1">
+      <span style="font-size:11px;color:var(--text2);flex:none;">%</span>
+      <button class="btn danger" onclick="removePenalty(${p.id})" style="padding:4px 8px;">✕</button>
+    </div>`).join('');
+}
+function saveSettings(){
+  cfg.guildName=document.getElementById('guildName').value;
+  cfg.sellerPct=parseFloat(document.getElementById('sellerPct').value)||0;
+  cfg.guestIncentive=parseFloat(document.getElementById('guestIncentive').value)||0;
+  save();alert('✅ 설정이 저장되었습니다!');
+}
+function addPenalty(){
+  const name=document.getElementById('newPenaltyName').value.trim();
+  const amt=parseFloat(document.getElementById('newPenaltyAmt').value)||0;
+  const pct=parseFloat(document.getElementById('newPenaltyPct').value)||0;
+  if(!name){alert('항목명을 입력해주세요.');return;}
+  cfg.penalties.push({id:cfg.nextPenaltyId++,name,amount:amt,pct});
+  document.getElementById('newPenaltyName').value='';document.getElementById('newPenaltyAmt').value='';document.getElementById('newPenaltyPct').value='';
+  save();renderPenaltyList();
+}
+function removePenalty(id){cfg.penalties=cfg.penalties.filter(p=>p.id!==id);save();renderPenaltyList();}
+function updatePenaltyName(id,v){const p=cfg.penalties.find(p=>p.id===id);if(p){p.name=v;save();}}
+function updatePenaltyAmt(id,v){const p=cfg.penalties.find(p=>p.id===id);if(p){p.amount=parseFloat(v)||0;save();}}
+function updatePenaltyPct(id,v){const p=cfg.penalties.find(p=>p.id===id);if(p){p.pct=parseFloat(v)||0;save();}}
+function renderMercAlbaSettings(){
+  const el=document.getElementById('mercAlbaList');
+  const mercAlbas=cfg.members.filter(m=>isMercOrAlba(m));
+  if(!mercAlbas.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">용병/알바 멤버가 없습니다.</div>';return;}
+  if(!cfg.mercAlbaSettings)cfg.mercAlbaSettings={};
+  el.innerHTML=`<table class="tbl merc-tbl" style="margin-bottom:6px;"><thead><tr>
+    <th>닉네임</th><th>구분</th><th>지급방식</th><th>금액(만)</th><th>%(1인 기준)</th>
+  </tr></thead><tbody>
+  ${mercAlbas.map(m=>{
+    const s=cfg.mercAlbaSettings[m.id]||{type:'fixed',value:0};
+    return `<tr>
+      <td style="font-weight:700;text-align:left;">${m.name}</td>
+      <td>${m.isAlba?'<span class="badge badge-alba">알바</span>':'<span class="badge badge-merc">용병</span>'}</td>
+      <td><select onchange="updateMercAlbaType(${m.id},this.value)" style="font-size:11px;padding:4px 6px;">
+        <option value="fixed" ${s.type==='fixed'?'selected':''}>고정금액</option>
+        <option value="pct" ${s.type==='pct'?'selected':''}>퍼센트</option>
+      </select></td>
+      <td>${s.type==='fixed'?`<input type="number" value="${s.value||0}" onchange="updateMercAlbaValue(${m.id},this.value)" style="width:70px;font-size:12px;padding:4px;" min="0">`:'-'}</td>
+      <td>${s.type==='pct'?`<div style="display:flex;align-items:center;gap:3px;justify-content:center;"><input type="number" value="${s.value||0}" onchange="updateMercAlbaValue(${m.id},this.value)" style="width:60px;font-size:12px;padding:4px;" min="0" max="200" step="0.1"><span style="font-size:11px;">%</span></div>`:'-'}</td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+}
+function updateMercAlbaType(id,type){if(!cfg.mercAlbaSettings)cfg.mercAlbaSettings={};cfg.mercAlbaSettings[id]={type,value:0};save();renderMercAlbaSettings();}
+function updateMercAlbaValue(id,v){if(!cfg.mercAlbaSettings)cfg.mercAlbaSettings={};if(!cfg.mercAlbaSettings[id])cfg.mercAlbaSettings[id]={type:'fixed',value:0};cfg.mercAlbaSettings[id].value=parseFloat(v)||0;save();}
+function toggleMemberRole(id,role,val){
+  const m=getMember(id);if(!m)return;
+  if(role==='isMerc'&&val){m.isAlba=false;}
+  if(role==='isAlba'&&val){m.isMerc=false;}
+  m[role]=val;
+  save();renderMemberList();renderRoleInfo();renderMercAlbaSettings();renderSupportSettings();renderParticipants();
+}
+function renderMemberList(){
+  const el=document.getElementById('memberList');
+  const statEl=document.getElementById('memberStatWrap');
+  if(!cfg.members.length){
+    el.innerHTML='<div style="color:var(--text3);font-size:12px;padding:10px 4px;">멤버가 없습니다.</div>';
+    if(statEl)statEl.innerHTML='';return;
+  }
+  if(statEl){
+    const jobCount={};
+    cfg.members.forEach(m=>{if(!jobCount[m.job])jobCount[m.job]=0;jobCount[m.job]++;});
+    statEl.innerHTML=`<span class="stat-chip">전체 <span class="val">${cfg.members.length}명</span></span>`+
+      Object.entries(jobCount).map(([j,c])=>`<span class="stat-chip">${j} <span class="val">${c}</span></span>`).join('');
+  }
+  el.innerHTML=cfg.members.map(m=>{
+    const ac=avatarClass(m);
+    const isGuest=m.job==='손님';
+    const roleChks=isGuest
+      ?`<span class="badge badge-guest">손님</span>`
+      :`<label style="display:flex;align-items:center;gap:2px;font-size:11px;color:var(--green);cursor:pointer;white-space:nowrap;"><input type="checkbox" class="chk" style="accent-color:var(--green);" ${m.isSeller?'checked':''} onchange="toggleMemberRole(${m.id},'isSeller',this.checked)"> 판매자</label>`+
+       `<label style="display:flex;align-items:center;gap:2px;font-size:11px;color:var(--purple);cursor:pointer;white-space:nowrap;"><input type="checkbox" class="chk" style="accent-color:var(--purple);" ${m.isRecruiter?'checked':''} onchange="toggleMemberRole(${m.id},'isRecruiter',this.checked)"> 손님구인</label>`+
+       `<label style="display:flex;align-items:center;gap:2px;font-size:11px;color:var(--amber);cursor:pointer;white-space:nowrap;"><input type="checkbox" class="chk" style="accent-color:var(--amber);" ${m.isMerc?'checked':''} onchange="toggleMemberRole(${m.id},'isMerc',this.checked)"> 용병</label>`+
+       `<label style="display:flex;align-items:center;gap:2px;font-size:11px;color:#c06020;cursor:pointer;white-space:nowrap;"><input type="checkbox" class="chk" style="accent-color:#c06020;" ${m.isAlba?'checked':''} onchange="toggleMemberRole(${m.id},'isAlba',this.checked)"> 알바</label>`+
+       `<label style="display:flex;align-items:center;gap:2px;font-size:11px;color:#4060c0;cursor:pointer;white-space:nowrap;"><input type="checkbox" class="chk" style="accent-color:#4060c0;" ${m.isSupport?'checked':''} onchange="toggleMemberRole(${m.id},'isSupport',this.checked)"> 지원금</label>`;
+    return `<div class="member-row" style="flex-wrap:wrap;gap:6px;"><div class="avatar ${ac}">${getAvatar(m.name)}</div><input type="text" value="${m.name}" style="font-size:13px;font-weight:700;border:1px solid var(--border);border-radius:6px;padding:3px 7px;width:100px;background:var(--bg4);color:var(--text);" onchange="renameMember(${m.id},this.value)"><span class="badge badge-job">${m.job}</span><div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;flex:1;">${roleChks}</div><button class="btn danger" onclick="removeMember(${m.id})" style="padding:3px 8px;font-size:11px;">✕</button></div>`;
+  }).join('');
+}
+function addMember(){
+  const name=document.getElementById('newMemberName').value.trim();
+  const job=document.getElementById('newMemberJob').value;
+  const isMerc=document.getElementById('newMemberMerc').checked;
+  const isAlba=document.getElementById('newMemberAlba').checked;
+  const isSeller=document.getElementById('newMemberSeller').checked;
+  const isRecruiter=document.getElementById('newMemberRecruiter').checked;
+  const isSupport=document.getElementById('newMemberSupport').checked;
+  if(!name||!job){alert('닉네임과 직업을 입력해주세요.');return;}
+  cfg.members.push({id:cfg.nextMemberId++,name,job,isMerc,isAlba,isSeller,isRecruiter,isSupport});
+  document.getElementById('newMemberName').value='';document.getElementById('newMemberJob').value='';
+  ['newMemberMerc','newMemberAlba','newMemberSeller','newMemberRecruiter','newMemberSupport'].forEach(id=>document.getElementById(id).checked=false);
+  save();renderMemberList();renderRoleInfo();renderMercAlbaSettings();renderSupportSettings();renderParticipants();renderPenaltyInputs();
+}
+function renameMember(id,newName){
+  const m=getMember(id);if(!m)return;
+  newName=newName.trim();if(!newName)return;
+  m.name=newName;
+  save();renderMemberList();renderRoleInfo();
+}
+function removeMember(id){
+  cfg.members=cfg.members.filter(m=>m.id!==id);cur.participants=cur.participants.filter(x=>x!==id);
+  if(cfg.mercAlbaSettings)delete cfg.mercAlbaSettings[id];
+  if(cfg.supportSettings)delete cfg.supportSettings[id];
+  save();renderMemberList();renderRoleInfo();renderMercAlbaSettings();renderSupportSettings();renderParticipants();renderPenaltyInputs();
+}
+
+// 지원금 설정 렌더
+function renderSupportSettings(){
+  const el=document.getElementById('supportList');
+  if(!el)return;
+  const supportMembers=cfg.members.filter(m=>m.isSupport);
+  if(!supportMembers.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">지원금 멤버가 없습니다.</div>';return;}
+  if(!cfg.supportSettings)cfg.supportSettings={};
+  el.innerHTML=`<table class="tbl" style="margin-bottom:6px;"><thead><tr>
+    <th>닉네임</th><th>직업</th><th>지원금액(만)</th>
+  </tr></thead><tbody>
+  ${supportMembers.map(m=>{
+    const v=cfg.supportSettings[m.id]||0;
+    return `<tr>
+      <td style="font-weight:700;text-align:left;">${m.name}</td>
+      <td><span class="badge badge-job">${m.job}</span></td>
+      <td><div style="display:flex;align-items:center;gap:4px;justify-content:center;">
+        <input type="number" value="${v}" onchange="updateSupportValue(${m.id},this.value)" style="width:80px;font-size:12px;padding:4px;" min="0">
+        <span style="font-size:11px;color:var(--text2);">만</span>
+      </div></td>
+    </tr>`;
+  }).join('')}</tbody></table>`;
+}
+function updateSupportValue(id,v){
+  if(!cfg.supportSettings)cfg.supportSettings={};
+  cfg.supportSettings[id]=parseFloat(v)||0;
+  save();
+}
+
+// 회차 삭제
+function deleteCurrentRaid(){
+  if(viewingRaidIdx<0||!raids[viewingRaidIdx]){alert('삭제할 회차를 선택해주세요.');return;}
+  const r=raids[viewingRaidIdx];
+  if(!confirm(`${r.date} 회차를 삭제할까요? 이 작업은 되돌릴 수 없어요.`))return;
+  raids.splice(viewingRaidIdx,1);
+  viewingRaidIdx=-1;
+  save();
+  renderRaidSelectDropdown();
+  renderResult();
+  alert('✅ 삭제되었습니다!');
+}
+
+// ══════════════════════════════════════════
+//  탭2: 원정대 입력
+// ══════════════════════════════════════════
+function renderRaidInput(){
+  if(!cur.date)cur.date=new Date().toISOString().slice(0,10);
+  document.getElementById('raidDate').value=cur.date;
+  renderParticipants();renderPenaltyInputs();renderDropTable();renderGuestPayTable();renderCostTable();
+}
+function renderParticipants(){
+  const el=document.getElementById('participantList');
+  const nonGuests=cfg.members.filter(m=>m.job!=='손님');
+  if(!nonGuests.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;padding:8px 0;">공대 설정에서 멤버를 먼저 추가해주세요.</div>';return;}
+  const checkedCount=nonGuests.filter(m=>cur.participants.includes(m.id)).length;
+  const allChecked=checkedCount===nonGuests.length;
+  const selectBar=`<div class="part-select-bar"><label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--teal);font-weight:700;cursor:pointer;font-family:'Jua',sans-serif;"><input type="checkbox" class="chk" ${allChecked?'checked':''} onchange="toggleAllParticipants(this.checked)"> 전체선택</label><span class="part-count">${checkedCount} / ${nonGuests.length}명 참여 🌊</span></div>`;
+  const rows=nonGuests.map(m=>{
+    const checked=cur.participants.includes(m.id)?'checked':'';
+    const roles=[m.isSeller?'<span class="badge badge-seller">판매자</span>':'',m.isRecruiter?'<span class="badge badge-recruiter">손님구인</span>':'',m.isMerc&&!m.isAlba?'<span class="badge badge-merc">용병</span>':'',m.isAlba?'<span class="badge badge-alba">알바</span>':'',m.isSupport?'<span class="badge badge-support">지원금</span>':''].filter(Boolean).join('');
+    return `<div class="member-row"><input type="checkbox" class="chk" ${checked} onchange="toggleParticipant(${m.id},this.checked)"><div class="avatar ${avatarClass(m)}">${getAvatar(m.name)}</div><div class="member-name">${m.name}</div><span class="badge badge-job">${m.job}</span>${roles}</div>`;
+  }).join('');
+  el.innerHTML=selectBar+rows;
+}
+function toggleAllParticipants(checked){
+  const nonGuests=cfg.members.filter(m=>m.job!=='손님');
+  if(checked){nonGuests.forEach(m=>{if(!cur.participants.includes(m.id))cur.participants.push(m.id);});}
+  else{cur.participants=[];}
+  renderParticipants();renderPenaltyInputs();
+}
+function toggleParticipant(id,checked){
+  if(checked){if(!cur.participants.includes(id))cur.participants.push(id);}
+  else{cur.participants=cur.participants.filter(x=>x!==id);}
+  renderParticipants();renderPenaltyInputs();
+}
+function renderPenaltyInputs(){
+  const el=document.getElementById('penaltyInputList');
+  const parts=cur.participants.map(id=>getMember(id)).filter(Boolean);
+  if(!parts.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">참여 멤버를 먼저 체크해주세요.</div>';return;}
+  el.innerHTML=parts.map(m=>{
+    const sel=cur.penaltyMap[m.id]||'';
+    const opts='<option value="">패널티 없음</option>'+cfg.penalties.map(p=>{
+      const desc=[];if(p.amount)desc.push(`-${fmt(p.amount)}만`);if(p.pct)desc.push(`-${p.pct}%`);
+      return `<option value="${p.id}" ${sel==p.id?'selected':''}>${p.name} (${desc.join(', ')||'없음'})</option>`;
+    }).join('');
+    return `<div class="member-row"><div class="avatar ${avatarClass(m)}">${getAvatar(m.name)}</div><div class="member-name">${m.name}</div><select onchange="setPenalty(${m.id},this.value)" style="flex:1;">${opts}</select></div>`;
+  }).join('');
+}
+function setPenalty(memberId,penaltyId){cur.penaltyMap[memberId]=penaltyId?parseInt(penaltyId):'';}
+function renderDropTable(){
+  const tbody=document.getElementById('dropBody');
+  if(!cur.items.length){tbody.innerHTML='<tr><td colspan="9" style="color:var(--text3);padding:16px;">아이템을 추가해주세요.</td></tr>';return;}
+  tbody.innerHTML=cur.items.map((it,idx)=>{
+    const isPending=it.status==='판매중';
+    return `<tr style="${isPending?'opacity:0.75;':''}">
+      <td style="text-align:left;">${it.name}</td>
+      <td><input type="number" value="${it.price||''}" placeholder="금액(만)" style="width:80px;font-size:11px;padding:3px 5px;" onchange="updateItemPrice(${idx},this.value)"></td>
+      <td>
+        <select style="font-size:11px;padding:3px 5px;width:75px;" onchange="updateItemTrade(${idx},this.value)">
+          <option value="택배" ${it.trade==='택배'?'selected':''}>택배</option>
+          <option value="교환" ${it.trade==='교환'?'selected':''}>교환</option>
+          <option value="상점판매" ${it.trade==='상점판매'?'selected':''}>상점판매</option>
+        </select>
+      </td>
+      <td>
+        <select style="font-size:11px;padding:3px 5px;width:78px;" onchange="updateItemNote(${idx},this.value)">
+          <option value="노수작" ${it.note==='노수작'?'selected':''}>노수작</option>
+          <option value="99수작" ${it.note==='99수작'?'selected':''}>99수작</option>
+          <option value="499수작" ${it.note==='499수작'?'selected':''}>499수작</option>
+          <option value="999수작" ${it.note==='999수작'?'selected':''}>999수작</option>
+          <option value="2499수작" ${it.note==='2499수작'?'selected':''}>2499수작</option>
+        </select>
+      </td>
+      <td style="color:var(--red2);">${it.price?'-'+fmt(it.fee)+'만':'-'}</td>
+      <td style="color:#2e7d32;font-weight:700;">${it.price?fmt(it.net)+'만':'-'}</td>
+      <td>${it.sellerName||'-'}</td>
+      <td>
+        <select style="font-size:11px;padding:3px 5px;width:80px;${isPending?'background:#fff8e0;color:#c08020;':'background:#e8fff0;color:#2e8b57;'}" onchange="updateItemStatus(${idx},this.value)">
+          <option value="판매완료" ${!isPending?'selected':''}>판매완료</option>
+          <option value="판매중" ${isPending?'selected':''}>판매중</option>
+        </select>
+      </td>
+      <td><button class="btn danger" onclick="removeItem(${idx})" style="padding:3px 8px;">✕</button></td>
+    </tr>`;
+  }).join('');
+}
+function updateItemStatus(idx,status){
+  cur.items[idx].status=status;
+  if(status==='판매완료'&&!cur.items[idx].price){
+    // 판매완료로 바꿨는데 금액 없으면 금액 입력 요청
+    const price=parseFloat(prompt(`"${cur.items[idx].name}" 판매 금액(만)을 입력해주세요.`))||0;
+    if(!price){cur.items[idx].status='판매중';renderDropTable();return;}
+    cur.items[idx].price=price;
+    const fee=calcFee(price,cur.items[idx].trade,cur.items[idx].note);
+    cur.items[idx].fee=fee;
+    cur.items[idx].net=Math.round((price-fee)*10)/10;
+  }
+  renderDropTable();
+}
+function updateItemPrice(idx,v){
+  const price=parseFloat(v)||0;
+  cur.items[idx].price=price;
+  const fee=price?calcFee(price,cur.items[idx].trade,cur.items[idx].note):0;
+  cur.items[idx].fee=fee;
+  cur.items[idx].net=price?Math.round((price-fee)*10)/10:0;
+  renderDropTable();
+}
+function updateItemTrade(idx,v){
+  cur.items[idx].trade=v;
+  if(cur.items[idx].price){
+    const fee=calcFee(cur.items[idx].price,v,cur.items[idx].note);
+    cur.items[idx].fee=fee;
+    cur.items[idx].net=Math.round((cur.items[idx].price-fee)*10)/10;
+  }
+  renderDropTable();
+}
+function updateItemNote(idx,v){
+  cur.items[idx].note=v;
+  if(cur.items[idx].price){
+    const fee=calcFee(cur.items[idx].price,cur.items[idx].trade,v);
+    cur.items[idx].fee=fee;
+    cur.items[idx].net=Math.round((cur.items[idx].price-fee)*10)/10;
+  }
+  renderDropTable();
+}
+function addItem(){
+  const name=document.getElementById('itemName').value.trim();
+  const price=parseFloat(document.getElementById('itemPrice').value)||0;
+  const trade=document.getElementById('itemTrade').value;
+  const note=document.getElementById('itemNote').value;
+  const sellerName=document.getElementById('itemSellerInput').value.trim()||null;
+  const seller=sellerName?getMemberByName(sellerName)?.id:null;
+  const status=document.getElementById('itemStatus').value;
+  if(!name){alert('아이템명을 입력해주세요.');return;}
+  // 판매완료인데 금액 없으면 경고
+  if(status==='판매완료'&&!price){alert('판매완료 상태에서는 금액을 입력해주세요.');return;}
+  const fee=price?calcFee(price,trade,note):0;
+  const net=price?Math.round((price-fee)*10)/10:0;
+  cur.items.push({name,price,trade,note,fee,net,seller,sellerName,status});
+  document.getElementById('itemName').value='';document.getElementById('itemPrice').value='';
+  document.getElementById('itemSellerInput').value='';document.getElementById('feePreview').textContent='';
+  document.getElementById('itemStatus').value='판매완료';
+  renderDropTable();
+}
+function removeItem(idx){cur.items.splice(idx,1);renderDropTable();}
+
+// 손님 지불 (수수료 포함)
+function renderGuestPayTable(){
+  const tbody=document.getElementById('guestPayBody');
+  if(!cur.guestPays||!cur.guestPays.length){tbody.innerHTML='<tr><td colspan="9" style="color:var(--text3);padding:16px;">손님 내역을 추가해주세요.</td></tr>';return;}
+  tbody.innerHTML=cur.guestPays.map((gp,idx)=>`<tr>
+    <td style="font-weight:700;">${gp.name}</td>
+    <td>${gp.item||'-'}</td>
+    <td>${fmt(gp.amount)}만</td>
+    <td><span class="badge" style="${tradeBadge(gp.trade||'택배')}">${gp.trade||'택배'}</span></td>
+    <td><span class="badge ${noteClass(gp.note||'노수작')}">${gp.note||'노수작'}</span></td>
+    <td style="color:var(--red2);">-${fmt(gp.fee||0)}만</td>
+    <td style="color:#2e7d32;font-weight:700;">${fmt(gp.net||gp.amount)}만</td>
+    <td>${gp.recruiterName||'-'}</td>
+    <td><button class="btn danger" onclick="removeGuestPay(${idx})" style="padding:3px 8px;">✕</button></td>
+  </tr>`).join('');
+}
+function addGuestPay(){
+  const name=document.getElementById('guestPayName').value.trim();
+  const item=document.getElementById('guestPayItem').value.trim();
+  const amount=parseFloat(document.getElementById('guestPayAmt').value)||0;
+  const trade=document.getElementById('guestPayTrade').value;
+  const note=document.getElementById('guestPayNote').value;
+  const recruiterName=document.getElementById('guestRecruiterInput').value.trim()||null;
+  if(!name||!amount){alert('손님 닉네임과 지불 금액을 입력해주세요.');return;}
+  const fee=calcFee(amount,trade,note);
+  const net=Math.round((amount-fee)*10)/10;
+  if(!cur.guestPays)cur.guestPays=[];
+  cur.guestPays.push({name,item,amount,trade,note,fee,net,recruiterName});
+  document.getElementById('guestPayName').value='';document.getElementById('guestPayItem').value='';
+  document.getElementById('guestPayAmt').value='';document.getElementById('guestRecruiterInput').value='';
+  document.getElementById('guestFeePreview').textContent='';
+  renderGuestPayTable();
+}
+function removeGuestPay(idx){cur.guestPays.splice(idx,1);renderGuestPayTable();}
+
+// 공대 지출
+function renderCostTable(){
+  const tbody=document.getElementById('costBody');
+  if(!cur.costs||!cur.costs.length){tbody.innerHTML='<tr><td colspan="3" style="color:var(--text3);padding:14px;">공대 지출 내역을 추가해주세요.</td></tr>';return;}
+  tbody.innerHTML=cur.costs.map((c,idx)=>`<tr>
+    <td style="text-align:left;">${c.name}</td>
+    <td style="color:#6a1b9a;font-weight:700;">${fmt(c.amount)}만</td>
+    <td><button class="btn danger" onclick="removeCost(${idx})" style="padding:3px 8px;">✕</button></td>
+  </tr>`).join('');
+}
+function addCost(){
+  const name=document.getElementById('costName').value.trim();
+  const amount=parseFloat(document.getElementById('costAmt').value)||0;
+  if(!name||!amount){alert('항목명과 금액을 입력해주세요.');return;}
+  if(!cur.costs)cur.costs=[];
+  cur.costs.push({name,amount});
+  document.getElementById('costName').value='';document.getElementById('costAmt').value='';
+  renderCostTable();
+}
+function removeCost(idx){cur.costs.splice(idx,1);renderCostTable();}
+
+function saveRaid(){
+  cur.date=document.getElementById('raidDate').value;
+  cur.memo=document.getElementById('raidMemo').value||'';
+  if(!cur.date){alert('날짜를 선택해주세요.');return;}
+  if(!cur.participants.length){alert('참여 멤버를 체크해주세요.');return;}
+  if(!cur.items.length&&(!cur.guestPays||!cur.guestPays.length)){alert('드랍템 또는 손님 지불 내역을 추가해주세요.');return;}
+  // 판매중 아이템 있으면 경고
+  const pendingItems=cur.items.filter(it=>it.status==='판매중');
+  if(pendingItems.length>0){
+    if(!confirm(`판매중인 아이템(${pendingItems.map(i=>i.name).join(', ')})이 있습니다. 분배 계산에서 제외됩니다. 계속 저장할까요?`))return;
+  }
+  const existing=raids.findIndex(r=>r.date===cur.date);
+  if(existing>=0){if(!confirm(`${cur.date} 회차가 이미 있습니다. 덮어쓸까요?`))return;raids.splice(existing,1);}
+  // 현재 시점 멤버 역할 스냅샷 저장
+  const memberSnapshot=cfg.members.map(m=>({...m}));
+  const raidData=calcRaid(cur);
+  raids.push({...JSON.parse(JSON.stringify(cur)),...raidData,memberSnapshot,settledMap:{},savedAt:new Date().toISOString()});
+  raids.sort((a,b)=>a.date.localeCompare(b.date));
+  save();alert('✅ 저장되었습니다!');showTab(3);
+}
+
+// ══════════════════════════════════════════
+//  핵심 계산 로직
+// ══════════════════════════════════════════
+function calcRaid(raidCur){
+  const parts=raidCur.participants.map(id=>getMember(id)).filter(Boolean);
+  // 알바는 고정급여를 받으므로 분배 인원에서 제외
+  const distribParts=parts.filter(m=>!m.isAlba);
+  const n=distribParts.length;if(!n)return{};
+
+  // 판매완료 아이템만 계산에 포함
+  const soldItems=raidCur.items.filter(it=>it.status!=='판매중');
+  const totalSale=soldItems.reduce((s,it)=>s+(it.price||0),0);
+  const totalFee=soldItems.reduce((s,it)=>s+(it.fee||0),0);
+  const totalNet=soldItems.reduce((s,it)=>s+(it.net||0),0);
+
+  // 손님: net(실수령) 기준으로 풀에 합산
+  const guestPays=raidCur.guestPays||[];
+  const totalGuestPay=guestPays.reduce((s,gp)=>s+(gp.amount||0),0);
+  const totalGuestNet=guestPays.reduce((s,gp)=>s+(gp.net!=null?gp.net:gp.amount||0),0);
+  const totalGuestFee=guestPays.reduce((s,gp)=>s+(gp.fee||0),0);
+
+  // 공대 지출
+  const costs=raidCur.costs||[];
+  const totalCost=costs.reduce((s,c)=>s+(c.amount||0),0);
+
+  // 판매자 인센 (판매완료 아이템만)
+  const sellerIncentiveMap={};
+  soldItems.forEach(it=>{
+    if(!it.seller)return;
+    if(!sellerIncentiveMap[it.seller])sellerIncentiveMap[it.seller]=0;
+    sellerIncentiveMap[it.seller]+=it.net*(cfg.sellerPct/100);
+  });
+  const totalSellerIncentive=Object.values(sellerIncentiveMap).reduce((s,v)=>s+v,0);
+
+  // 손님구인 인센
+  const recruiterIncentiveMap={};
+  guestPays.forEach(gp=>{
+    if(!gp.recruiterName)return;
+    const m=getMemberByName(gp.recruiterName);if(!m)return;
+    if(!recruiterIncentiveMap[m.id])recruiterIncentiveMap[m.id]=0;
+    recruiterIncentiveMap[m.id]+=cfg.guestIncentive;
+  });
+  const totalRecruiterIncentive=Object.values(recruiterIncentiveMap).reduce((s,v)=>s+v,0);
+
+  // 용병/알바 고정지급
+  const settings=cfg.mercAlbaSettings||{};
+  const mercAlbaFixed={};
+  parts.forEach(m=>{
+    if(!isMercOrAlba(m))return;
+    const s=settings[m.id]||{type:'fixed',value:0};
+    if(s.type==='fixed'&&s.value>0)mercAlbaFixed[m.id]=s.value;
+  });
+  const totalMercAlbaFixed=Object.values(mercAlbaFixed).reduce((s,v)=>s+v,0);
+
+  // 분배 풀 = 드랍 순수익 + 손님 실수령 - 판매자인센 - 손님구인인센 - 용병고정 - 공대지출
+  const pool=totalNet+totalGuestNet-totalSellerIncentive-totalRecruiterIncentive-totalMercAlbaFixed-totalCost;
+
+  // 지원금 차감 (분배 풀에서 선차감)
+  const supportSettings=cfg.supportSettings||{};
+  const supportMap={}; // memberId → 지원금액
+  distribParts.forEach(m=>{
+    if(!m.isSupport)return;
+    const sv=supportSettings[m.id]||0;
+    if(sv>0)supportMap[m.id]=sv;
+  });
+  const totalSupport=Object.values(supportMap).reduce((s,v)=>s+v,0);
+
+  // 분배 풀 재계산 (지원금 포함)
+  const poolFinal=pool-totalSupport;
+
+  // 기본 1인당 (지원금 차감 후)
+  const basePerPersonFinal=poolFinal/n;
+
+  // 패널티 재계산 (basePerPersonFinal 기준) - 알바 제외
+  const penaltyAmtMapFinal={};let penaltyPoolFinal=0;
+  distribParts.forEach(m=>{
+    const pid=raidCur.penaltyMap?raidCur.penaltyMap[m.id]:null;if(!pid)return;
+    const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
+    let total=(pen.amount||0);
+    if(pen.pct&&pen.pct>0)total+=basePerPersonFinal*(pen.pct/100);
+    penaltyAmtMapFinal[m.id]=Math.round(total*10)/10;
+    penaltyPoolFinal+=penaltyAmtMapFinal[m.id];
+  });
+  const noPenaltyCountFinal=distribParts.filter(m=>!penaltyAmtMapFinal[m.id]).length;
+  const bonusPerNoPenaltyFinal=noPenaltyCountFinal?penaltyPoolFinal/noPenaltyCountFinal:0;
+
+  // 용병 퍼센트 지급 (알바 제외, 용병만)
+  const regularNoPenaltyBase=basePerPersonFinal+bonusPerNoPenaltyFinal;
+  const mercAlbaPct={};
+  distribParts.forEach(m=>{
+    if(!m.isMerc)return;
+    const s=settings[m.id]||{type:'fixed',value:0};
+    if(s.type==='pct'&&s.value>0)mercAlbaPct[m.id]=Math.round(regularNoPenaltyBase*(s.value/100)*10)/10;
+  });
+
+  // 최종 분배
+  const finalMap={};
+  parts.forEach(m=>{
+    // 알바: 고정금액만 지급 (분배 풀 참여 없음)
+    if(m.isAlba){
+      finalMap[m.id]=Math.round((mercAlbaFixed[m.id]||0)*10)/10;
+      return;
+    }
+    if(m.isMerc){
+      // 용병: 고정/퍼센트 + 패널티/보너스
+      let amt=basePerPersonFinal;
+      if(mercAlbaFixed[m.id]!=null){
+        amt=mercAlbaFixed[m.id];
+        if(penaltyAmtMapFinal[m.id])amt-=penaltyAmtMapFinal[m.id];
+        else amt+=bonusPerNoPenaltyFinal;
+      } else if(mercAlbaPct[m.id]!=null){
+        amt=mercAlbaPct[m.id];
+        if(penaltyAmtMapFinal[m.id])amt-=penaltyAmtMapFinal[m.id];
+      } else {
+        if(penaltyAmtMapFinal[m.id])amt-=penaltyAmtMapFinal[m.id];
+        else amt+=bonusPerNoPenaltyFinal;
+      }
+      finalMap[m.id]=Math.round(amt*10)/10;
+      return;
+    }
+    // 일반 멤버: 기본분배금 + 패널티/보너스 + 인센 + 지원금
+    let amt=basePerPersonFinal;
+    if(penaltyAmtMapFinal[m.id])amt-=penaltyAmtMapFinal[m.id];
+    else amt+=bonusPerNoPenaltyFinal;
+    if(sellerIncentiveMap[m.id])amt+=sellerIncentiveMap[m.id];
+    if(recruiterIncentiveMap[m.id])amt+=recruiterIncentiveMap[m.id];
+    if(supportMap[m.id]!=null)amt+=supportMap[m.id];
+    finalMap[m.id]=Math.round(amt*10)/10;
+  });
+
+  return{
+    totalSale:Math.round(totalSale*10)/10,totalFee:Math.round(totalFee*10)/10,totalNet:Math.round(totalNet*10)/10,
+    totalGuestPay:Math.round(totalGuestPay*10)/10,totalGuestFee:Math.round(totalGuestFee*10)/10,totalGuestNet:Math.round(totalGuestNet*10)/10,
+    totalCost:Math.round(totalCost*10)/10,
+    totalSellerIncentive:Math.round(totalSellerIncentive*10)/10,
+    totalRecruiterIncentive:Math.round(totalRecruiterIncentive*10)/10,
+    totalMercAlbaFixed:Math.round(totalMercAlbaFixed*10)/10,
+    totalSupport:Math.round(totalSupport*10)/10,
+    pool:Math.round(pool*10)/10,
+    poolFinal:Math.round(poolFinal*10)/10,
+    penaltyPool:Math.round(penaltyPoolFinal*10)/10,
+    bonusPerNoPenalty:Math.round(bonusPerNoPenaltyFinal*10)/10,
+    basePerPerson:Math.round(basePerPersonFinal*10)/10,
+    sellerIncentiveMap,recruiterIncentiveMap,
+    penaltyAmtMap:penaltyAmtMapFinal,
+    mercAlbaFixed,mercAlbaPct,supportMap,
+    finalMap,participants:raidCur.participants,
+  };
+}
+
+// ══════════════════════════════════════════
+//  탭3: 분배 결과
+// ══════════════════════════════════════════
+function renderRaidSelectDropdown(){
+  const sel=document.getElementById('raidSelectDropdown');
+  const sorted=[...raids].sort((a,b)=>b.date.localeCompare(a.date));
+  if(!sorted.length){sel.innerHTML='<option value="">저장된 회차가 없습니다</option>';return;}
+  sel.innerHTML=sorted.map((r,i)=>{
+    const realIdx=raids.indexOf(r);
+    return `<option value="${realIdx}" ${realIdx===viewingRaidIdx?'selected':''}>${r.date} — 1인 ${fmt(r.basePerPerson)}만 (${r.participants?r.participants.length:0}명)</option>`;
+  }).join('');
+  // 기본: 가장 최신 회차
+  if(viewingRaidIdx<0&&raids.length){viewingRaidIdx=raids.indexOf(sorted[0]);sel.value=viewingRaidIdx;}
+}
+function onRaidSelect(idx){viewingRaidIdx=parseInt(idx);renderResult();}
+function renderResult(){
+  renderRaidSelectDropdown();
+  if(!raids.length||viewingRaidIdx<0){
+    document.getElementById('resultInfo').style.display='';document.getElementById('resultArea').style.display='none';return;
+  }
+  document.getElementById('resultInfo').style.display='none';document.getElementById('resultArea').style.display='';
+  const r=raids[viewingRaidIdx];
+  // 스냅샷이 있으면 스냅샷에서, 없으면 현재 cfg에서 멤버 정보 읽기
+  const getSnapshotMember=(id)=>{
+    if(r.memberSnapshot)return r.memberSnapshot.find(m=>m.id==id)||getMember(id);
+    return getMember(id);
+  };
+  const parts=r.participants.map(id=>getSnapshotMember(id)).filter(Boolean);
+
+  // 드랍템 현황 렌더
+  const items=r.items||[];
+  if(items.length){
+    document.getElementById('resultDropCard').style.display='';
+    document.getElementById('resultDropBody').innerHTML=items.map(it=>{
+      const isPending=it.status==='판매중';
+      const statusBadge=isPending
+        ?`<span class="badge" style="background:#fff8e0;color:#c08020;border:1.5px solid #f0d880;">⏳ 판매중</span>`
+        :`<span class="badge" style="background:#e8fff0;color:#2e8b57;border:1px solid #a5d6a7;">✅ 판매완료</span>`;
+      return `<tr style="${isPending?'opacity:0.65;':''}">
+        <td style="text-align:left;font-weight:700;">${it.name}</td>
+        <td>${it.price?fmt(it.price)+'만':'<span style="color:var(--text3);">-</span>'}</td>
+        <td><span class="badge" style="${tradeBadge(it.trade)}">${it.trade}</span></td>
+        <td><span class="badge ${noteClass(it.note)}">${it.note}</span></td>
+        <td style="color:var(--red2);">${it.price?'-'+fmt(it.fee)+'만':'-'}</td>
+        <td style="color:#2e7d32;font-weight:700;">${it.price?fmt(it.net)+'만':'-'}</td>
+        <td>${statusBadge}</td>
+      </tr>`;
+    }).join('');
+  } else {
+    document.getElementById('resultDropCard').style.display='none';
+  }
+
+  document.getElementById('resultMetrics').innerHTML=`
+    <div class="metric"><div class="metric-label">📅 날짜</div><div class="metric-value blue" style="font-size:14px;">${r.date}</div></div>
+    <div class="metric"><div class="metric-label">드랍 판매금</div><div class="metric-value">${fmt(r.totalSale)}만</div></div>
+    <div class="metric"><div class="metric-label">손님 지불금</div><div class="metric-value purple">+${fmt(r.totalGuestPay||0)}만</div></div>
+    <div class="metric"><div class="metric-label">수수료 합계</div><div class="metric-value red">-${fmt((r.totalFee||0)+(r.totalGuestFee||0))}만</div></div>
+    <div class="metric"><div class="metric-label">공대 지출</div><div class="metric-value orange">-${fmt(r.totalCost||0)}만</div></div>
+    <div class="metric"><div class="metric-label">지원금</div><div class="metric-value purple">-${fmt(r.totalSupport||0)}만</div></div>
+    <div class="metric"><div class="metric-label">패널티 풀</div><div class="metric-value orange">±${fmt(r.penaltyPool||0)}만</div></div>
+    <div class="metric"><div class="metric-label">기본 1인당</div><div class="metric-value green">${fmt(r.basePerPerson)}만</div></div>
+  `;
+
+  document.getElementById('resultMemberList').innerHTML=parts.map(m=>{
+    const final=r.finalMap?(r.finalMap[m.id]??0):0;
+    const penalty=r.penaltyAmtMap?r.penaltyAmtMap[m.id]:null;
+    const penaltyPid=r.penaltyMap?r.penaltyMap[m.id]:null;
+    const penaltyName=penaltyPid?cfg.penalties.find(p=>p.id==penaltyPid)?.name||'패널티':'패널티';
+    const sellerBonus=r.sellerIncentiveMap?r.sellerIncentiveMap[m.id]:null;
+    const recruiterBonus=r.recruiterIncentiveMap?r.recruiterIncentiveMap[m.id]:null;
+    // 정산 상태를 회차 데이터에서 읽기 (없으면 false)
+    const settled=r.settledMap?r.settledMap[m.id]===true:false;
+    const isMA=isMercOrAlba(m);
+    const isSupport=r.supportMap&&r.supportMap[m.id]!=null;
+    let subLines=[];
+    if(isMA){
+      const fv=r.mercAlbaFixed?r.mercAlbaFixed[m.id]:null;
+      const pv=r.mercAlbaPct?r.mercAlbaPct[m.id]:null;
+      if(fv!=null)subLines.push(`<span style="color:#bf360c;">고정 ${fmt(fv)}만</span>`);
+      else if(pv!=null)subLines.push(`<span style="color:#bf360c;">퍼센트 ${fmt(pv)}만</span>`);
+      else subLines.push(`<span style="color:var(--text2);">균등분배</span>`);
+      if(penalty)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(penalty)}만 (${penaltyName})</span>`);
+      else subLines.push(`<span style="color:#2e7d32;">패널티없음 보너스 +${fmt(r.bonusPerNoPenalty||0)}만</span>`);
+    } else {
+      if(penalty)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(penalty)}만 (${penaltyName})</span>`);
+      else subLines.push(`<span style="color:#2e7d32;">패널티없음 보너스 +${fmt(r.bonusPerNoPenalty||0)}만</span>`);
+      if(isSupport)subLines.push(`<span style="color:#6a1b9a;">지원금 +${fmt(r.supportMap[m.id])}만</span>`);
+      if(sellerBonus)subLines.push(`<span style="color:#1b5e20;">판매자인센 +${fmt(sellerBonus)}만</span>`);
+      if(recruiterBonus)subLines.push(`<span style="color:#6a1b9a;">손님구인인센 +${fmt(recruiterBonus)}만</span>`);
+    }
+    return `<div class="result-row">
+      <div class="avatar ${avatarClass(m)}">${getAvatar(m.name)}</div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;">${m.name} <span style="font-size:10px;color:var(--text2);">${m.job}</span>${isMA?`<span class="badge ${m.isAlba?'badge-alba':'badge-merc'}" style="margin-left:4px;">${m.isAlba?'알바':'용병'}</span>`:''}</div>
+        <div style="font-size:10px;margin-top:2px;">${subLines.join(' · ')}</div>
+      </div>
+      <div class="result-amount">${fmt(final)}만</div>
+      <div class="toggle-wrap" onclick="toggleSettled(${viewingRaidIdx},${m.id})">
+        <div class="toggle ${settled?'on':''}" id="tog_${m.id}"></div>
+        <span style="font-size:11px;color:var(--text2);">${settled?'정산완료':'미정산'}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // 판매중 아이템 있으면 표시
+  const pendingItems=(r.items||[]).filter(it=>it.status==='판매중');
+  if(pendingItems.length){
+    document.getElementById('resultMemberList').innerHTML+=`<div style="margin-top:10px;padding:8px 12px;background:#fff8e0;border:1.5px solid #f0d880;border-radius:10px;font-size:12px;color:#c08020;">⏳ 판매중 아이템: ${pendingItems.map(i=>i.name).join(', ')} (분배 계산 미포함)</div>`;
+  }
+
+  // 회차 메모 표시
+  const memoCard=document.getElementById('resultMemoCard');
+  const memoDisplay=document.getElementById('resultMemoDisplay');
+  if(r.memo&&r.memo.trim()){
+    memoDisplay.textContent=r.memo;
+    memoCard.style.display='';
+  } else {
+    memoCard.style.display='none';
+  }
+
+  let detail=`
+    <div class="field-row"><span class="field-label">드랍 판매금</span><span style="font-size:13px;font-weight:700;">${fmt(r.totalSale)}만</span></div>
+    <div class="field-row"><span class="field-label">드랍 수수료</span><span style="font-size:13px;color:var(--red2);">-${fmt(r.totalFee||0)}만</span></div>
+    <div class="field-row"><span class="field-label">드랍 순수익</span><span style="font-size:13px;font-weight:700;">${fmt(r.totalNet||0)}만</span></div>`;
+  if(r.totalGuestPay)detail+=`
+    <div class="field-row"><span class="field-label">손님 지불금</span><span style="font-size:13px;color:#6a1b9a;">${fmt(r.totalGuestPay)}만</span></div>
+    <div class="field-row"><span class="field-label">손님 수수료</span><span style="font-size:13px;color:var(--red2);">-${fmt(r.totalGuestFee||0)}만</span></div>
+    <div class="field-row"><span class="field-label">손님 실수령</span><span style="font-size:13px;color:#6a1b9a;font-weight:700;">+${fmt(r.totalGuestNet||0)}만</span></div>`;
+  detail+=`<div class="divider"></div>`;
+  if(r.totalSellerIncentive)detail+=`<div class="field-row"><span class="field-label">판매자 인센</span><span style="font-size:13px;color:var(--red2);">-${fmt(r.totalSellerIncentive)}만</span></div>`;
+  if(r.totalRecruiterIncentive)detail+=`<div class="field-row"><span class="field-label">손님구인 인센</span><span style="font-size:13px;color:var(--red2);">-${fmt(r.totalRecruiterIncentive)}만</span></div>`;
+  if(r.totalMercAlbaFixed)detail+=`<div class="field-row"><span class="field-label">용병/알바 고정</span><span style="font-size:13px;color:#e65100;">-${fmt(r.totalMercAlbaFixed)}만</span></div>`;
+  if(r.totalSupport)detail+=`<div class="field-row"><span class="field-label">지원금 합계</span><span style="font-size:13px;color:#6a1b9a;">-${fmt(r.totalSupport)}만</span></div>`;
+  if(r.totalCost)detail+=`<div class="field-row"><span class="field-label">공대 지출</span><span style="font-size:13px;color:#6a1b9a;">-${fmt(r.totalCost)}만</span></div>`;
+  detail+=`<div class="field-row"><span class="field-label">분배 풀</span><span style="font-size:13px;font-weight:700;color:#2255aa;">${fmt(r.pool||0)}만</span></div>
+    <div class="divider"></div><div class="section-label">패널티 내역</div>`;
+  parts.forEach(m=>{
+    if(r.penaltyAmtMap&&r.penaltyAmtMap[m.id]){
+      const pid=r.penaltyMap?r.penaltyMap[m.id]:null;
+      const pen=pid?cfg.penalties.find(p=>p.id==pid):null;
+      const penName=pen?pen.name:'패널티';
+      const desc=pen?[pen.amount?fmt(pen.amount)+'만':'',pen.pct?`${pen.pct}%`:''].filter(Boolean).join(' + '):'';
+      detail+=`<div class="field-row"><span class="field-label" style="color:var(--red2);">${m.name}</span><span style="font-size:12px;color:var(--red2);">-${fmt(r.penaltyAmtMap[m.id])}만 · ${penName}${desc?` (${desc})`:''}</span></div>`;
+    }
+  });
+  if(r.penaltyPool)detail+=`<div class="field-row"><span class="field-label" style="color:#2e7d32;">무패널티 보너스</span><span style="font-size:12px;color:#2e7d32;">+${fmt(r.bonusPerNoPenalty)}만/인</span></div>`;
+  if(r.guestPays&&r.guestPays.length){
+    detail+=`<div class="divider"></div><div class="section-label">손님 내역</div>`;
+    r.guestPays.forEach(gp=>{detail+=`<div class="field-row"><span class="field-label" style="color:#c62828;">${gp.name}</span><span style="font-size:12px;">${gp.item||''} ${fmt(gp.amount)}만 → 실수령 ${fmt(gp.net!=null?gp.net:gp.amount)}만${gp.recruiterName?` (구인:${gp.recruiterName})`:''}</span></div>`;});
+  }
+  if(r.costs&&r.costs.length){
+    detail+=`<div class="divider"></div><div class="section-label">공대 지출 내역</div>`;
+    r.costs.forEach(c=>{detail+=`<div class="field-row"><span class="field-label" style="color:#6a1b9a;">${c.name}</span><span style="font-size:12px;color:#6a1b9a;">-${fmt(c.amount)}만</span></div>`;});
+  }
+  document.getElementById('resultDetail').innerHTML=detail;
+}
+
+// 4. 정산 토글 - 회차 데이터에 저장 (임시 반영, 저장 버튼으로 확정)
+function toggleSettled(raidIdx,memberId){
+  if(raidIdx<0||!raids[raidIdx])return;
+  if(!raids[raidIdx].settledMap)raids[raidIdx].settledMap={};
+  const cur=raids[raidIdx].settledMap[memberId]===true;
+  raids[raidIdx].settledMap[memberId]=!cur;
+  const tog=document.getElementById(`tog_${memberId}`);
+  if(tog){tog.classList.toggle('on',!cur);tog.nextElementSibling.textContent=!cur?'정산완료':'미정산';}
+}
+
+// 4. 정산현황 저장 버튼
+function saveSettledState(){
+  if(viewingRaidIdx<0||!raids[viewingRaidIdx]){alert('저장할 회차를 선택해주세요.');return;}
+  save();
+  alert('✅ 정산 현황이 저장되었습니다!');
+}
+
+// 6. JPG 저장 - 공통 함수
+function doHtml2Canvas(el,filename){
+  const doCapture=()=>{
+    // 배경을 흰색으로 명시적으로 설정해서 선명하게
+    html2canvas(el,{
+      backgroundColor:'#e8f7ff',
+      scale:2,
+      useCORS:true,
+      allowTaint:true,
+      logging:false,
+      onclone:(doc)=>{
+        // 클론된 문서의 배경도 명시적으로 설정
+        doc.body.style.background='linear-gradient(160deg,#c8eeff 0%,#e8f7ff 40%,#d4f5e0 80%,#ffe8f0 100%)';
+      }
+    }).then(canvas=>{
+      const a=document.createElement('a');
+      a.download=filename;
+      a.href=canvas.toDataURL('image/jpeg',0.95);
+      a.click();
+    });
+  };
+  if(window.html2canvas){
+    doCapture();
+  } else {
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    s.onload=doCapture;
+    document.head.appendChild(s);
+  }
+}
+
+// 6. JPG 저장 - 분배결과
+function exportResultAsJpg(){
+  const el=document.getElementById('resultArea');
+  if(!el||el.style.display==='none'){alert('저장할 분배 결과가 없습니다.');return;}
+  doHtml2Canvas(el,`분배결과_${raids[viewingRaidIdx]?.date||'결과'}.jpg`);
+}
+
+// 6. JPG 저장 - 통계
+function exportStatsAsJpg(){
+  const el=document.getElementById('statsContent');
+  doHtml2Canvas(el,`통계히스토리_${new Date().toISOString().slice(0,10)}.jpg`);
+}
+
+// ══════════════════════════════════════════
+//  탭4: 통계 & 히스토리
+// ══════════════════════════════════════════
+function renderStats(){
+  const total=raids.reduce((s,r)=>s+(r.totalSale||0)+(r.totalGuestPay||0),0);
+  const now=new Date();
+  const ym=now.toISOString().slice(0,7);
+  const weekAgo=new Date(now-7*86400000);
+  const monthTotal=raids.filter(r=>r.date&&r.date.startsWith(ym)).reduce((s,r)=>s+(r.totalSale||0)+(r.totalGuestPay||0),0);
+  const weekTotal=raids.filter(r=>r.date&&new Date(r.date)>=weekAgo).reduce((s,r)=>s+(r.totalSale||0)+(r.totalGuestPay||0),0);
+  document.getElementById('statMetrics').innerHTML=`
+    <div class="metric"><div class="metric-label">전체 누적 정산금</div><div class="metric-value blue">${fmt(total)}만</div></div>
+    <div class="metric"><div class="metric-label">이번 달</div><div class="metric-value">${fmt(monthTotal)}만</div></div>
+    <div class="metric"><div class="metric-label">이번 주</div><div class="metric-value">${fmt(weekTotal)}만</div></div>
+    <div class="metric"><div class="metric-label">총 회차</div><div class="metric-value">${raids.length}회</div></div>`;
+  renderHistory();renderMemberStats();renderPenaltyHistoryList();
+}
+function renderHistory(){
+  const filter=document.getElementById('filterPeriod').value;
+  const now=new Date();const weekAgo=new Date(now-7*86400000);const ym=now.toISOString().slice(0,7);
+  let list=[...raids].sort((a,b)=>b.date.localeCompare(a.date));
+  if(filter==='week')list=list.filter(r=>new Date(r.date)>=weekAgo);
+  else if(filter==='month')list=list.filter(r=>r.date&&r.date.startsWith(ym));
+  const el=document.getElementById('historyList');
+  if(!list.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;padding:12px 0;">기록이 없습니다.</div>';return;}
+  el.innerHTML=list.map(r=>`
+    <div class="hist-row" onclick="viewRaidFromHistory('${r.date}')">
+      <div style="font-size:12px;color:var(--text2);min-width:70px;">${r.date}</div>
+      <div style="flex:1;font-weight:700;">${fmt((r.totalSale||0)+(r.totalGuestPay||0))}만</div>
+      <div style="font-size:12px;color:#2e7d32;">1인 ${fmt(r.basePerPerson)}만</div>
+      <div style="font-size:11px;color:var(--text3);">${r.participants?r.participants.length:0}명${r.guestPays&&r.guestPays.length?` · 손님${r.guestPays.length}`:''}</div>
+      <div style="font-size:11px;color:var(--orange2);">▶</div>
+    </div>`).join('');
+}
+function viewRaidFromHistory(date){
+  const idx=raids.findIndex(r=>r.date===date);
+  if(idx<0)return;
+  viewingRaidIdx=idx;
+  showTab(3);
+}
+function renderMemberStats(){
+  const el=document.getElementById('memberStatBars');
+  if(!cfg.members.length||!raids.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">데이터 없음</div>';return;}
+  const totals={};cfg.members.forEach(m=>{totals[m.id]=0;});
+  raids.forEach(r=>{if(!r.finalMap)return;Object.entries(r.finalMap).forEach(([id,v])=>{totals[id]=(totals[id]||0)+v;});});
+  const max=Math.max(...Object.values(totals),1);
+  const colors=['#4da6ff','#1D9E75','#7F77DD','#D85A30','#ff8fb1','#ffb347'];
+  el.innerHTML=cfg.members.filter(m=>m.job!=='손님').map((m,i)=>{
+    const v=totals[m.id]||0;
+    return `<div class="bar-row"><span class="bar-label">${m.name}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.round(v/max*100)}%;background:${colors[i%colors.length]};"></div></div><span class="bar-val">${fmt(v)}만</span></div>`;
+  }).join('');
+}
+function renderPenaltyHistoryList(){
+  const el=document.getElementById('penaltyHistory');
+  const rows=[];
+  raids.forEach(r=>{
+    if(!r.penaltyAmtMap)return;
+    Object.entries(r.penaltyAmtMap).forEach(([mid,amt])=>{
+      const m=getMember(parseInt(mid));
+      const pid=r.penaltyMap?r.penaltyMap[mid]:null;
+      const pen=pid?cfg.penalties.find(p=>p.id==pid):null;
+      rows.push({date:r.date,name:m?m.name:'?',penName:pen?pen.name:'패널티',amt});
+    });
+  });
+  rows.sort((a,b)=>b.date.localeCompare(a.date));
+  if(!rows.length){el.innerHTML='<div style="color:var(--text3);font-size:12px;">패널티 이력 없음</div>';return;}
+  el.innerHTML=rows.slice(0,20).map(row=>`
+    <div class="hist-row" style="cursor:default;">
+      <span style="font-size:11px;color:var(--text2);min-width:70px;">${row.date}</span>
+      <span style="flex:1;font-size:13px;font-weight:700;">${row.name}</span>
+      <span class="badge badge-penalty">${row.penName}</span>
+      <span style="font-size:12px;color:var(--red2);font-weight:700;">-${fmt(row.amt)}만</span>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════
+//  초기화
+// ══════════════════════════════════════════
+function renderAll(){renderSettings();renderRaidInput();}
+
+// 업데이트 팝업
+const UPDATE_VERSION='2026.04.10';
+function showUpdatePopup(){
+  const dismissed=localStorage.getItem('mpl_update_dismissed');
+  const today=new Date().toISOString().slice(0,10);
+  if(dismissed===today||dismissed===UPDATE_VERSION)return;
+  document.getElementById('updatePopup').style.display='flex';
+}
+function dismissUpdatePopup(todayOnly){
+  const today=new Date().toISOString().slice(0,10);
+  localStorage.setItem('mpl_update_dismissed', todayOnly ? today : UPDATE_VERSION);
+  document.getElementById('updatePopup').style.display='none';
+}
+
+load();renderAll();showUpdatePopup();
+</script>
+</body>
+</html>
