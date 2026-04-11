@@ -568,7 +568,7 @@ select{cursor:pointer;}
       <div style="margin-bottom:6px;">
         <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🐛 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 적용이 전혀 반영되지 않던 핵심 버그 수정 (penaltyMap 키 타입 불일치)</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>벌금 낸 사람도 다른 사람 벌금 보너스를 받도록 수정 (각자 내 벌금 제외한 나머지를 전체 인원으로 나눠 수령)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>계산 상세의 분배 풀 금액이 지원금 차감 전 값으로 표시되던 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 벌금이 공대원 보너스 풀에 반영되지 않던 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 보너스 계산 오류 수정 — 벌금 ÷ 인원이 실제보다 크게 나오던 버그</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 퍼센트(%) 지급 방식 설정 시 0만으로 표시되던 버그 수정</div>
@@ -1536,7 +1536,7 @@ function renderResult(){
   if(r.totalMercAlbaFixed)detail+=`<div class="field-row"><span class="field-label">용병/알바 고정</span><span style="font-size:13px;color:#e65100;">-${fmt(r.totalMercAlbaFixed)}만</span></div>`;
   if(r.totalSupport)detail+=`<div class="field-row"><span class="field-label">지원금 합계</span><span style="font-size:13px;color:#6a1b9a;">-${fmt(r.totalSupport)}만</span></div>`;
   if(r.totalCost)detail+=`<div class="field-row"><span class="field-label">공대 지출</span><span style="font-size:13px;color:#6a1b9a;">-${fmt(r.totalCost)}만</span></div>`;
-  detail+=`<div class="field-row"><span class="field-label">분배 풀</span><span style="font-size:13px;font-weight:700;color:#2255aa;">${fmt(r.pool||0)}만</span></div>
+  detail+=`<div class="field-row"><span class="field-label">분배 풀</span><span style="font-size:13px;font-weight:700;color:#2255aa;">${fmt(r.poolFinal||0)}만</span></div>
     <div class="divider"></div><div class="section-label">패널티 내역</div>`;
   if(r.penaltyPool){detail+=`<div class="field-row"><span class="field-label" style="color:#2e7d32;">벌금보너스(1인)</span><span style="font-size:12px;color:#2e7d32;">전체벌금 ${fmt(r.penaltyPool)}만 ÷ ${(r.participants||[]).filter(id=>{const m=r.memberSnapshot?r.memberSnapshot.find(x=>x.id==id):getMember(id);return m&&!m.isAlba;}).length}명</span></div>`;}
   parts.forEach(m=>{
@@ -1669,7 +1669,7 @@ function renderPenaltyHistoryList(){
 // ══════════════════════════════════════════
 function renderAll(){renderSettings();renderRaidInput();}
 
-const UPDATE_VERSION='2026.04.11e';
+const UPDATE_VERSION='2026.04.11f';
 function showUpdatePopup(){
   const dismissed=localStorage.getItem('mpl_update_dismissed');
   const today=new Date().toISOString().slice(0,10);
