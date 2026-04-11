@@ -567,8 +567,10 @@ select{cursor:pointer;}
       </div>
       <div style="margin-bottom:6px;">
         <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🐛 버그 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 적용이 전혀 반영되지 않던 핵심 버그 수정 (penaltyMap 키 타입 불일치)</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 권한 멤버에게 패널티 적용 시 정산 내역에 반영되지 않던 버그 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 패널티 계산 시 분배 인원 오류 수정 (벌금이 잘못된 인원수로 나뉘던 버그)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바에게 잘못 지급되던 패널티 보너스 제거 (알바는 고정급여만)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 패널티 계산 시 분배 인원 오류 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 패널티는 분배금에서 차감하지 않고 벌금 총액만 표시하도록 변경</div>
       </div>
 
@@ -1262,8 +1264,10 @@ function calcRaid(raidCur){
   let penaltyPoolFinal=0;
 
   // distribParts 패널티 계산
+  // ★ FIX: penaltyMap 키가 문자열로 저장되므로 String(m.id)로 조회
   distribParts.forEach(m=>{
-    const pid=raidCur.penaltyMap?raidCur.penaltyMap[m.id]:null;if(!pid)return;
+    const pid=raidCur.penaltyMap?(raidCur.penaltyMap[m.id]||raidCur.penaltyMap[String(m.id)]):null;
+    if(!pid)return;
     const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
     let total=(pen.amount||0);
     if(pen.pct&&pen.pct>0)total+=basePerPersonFinal*(pen.pct/100);
@@ -1274,8 +1278,10 @@ function calcRaid(raidCur){
   });
 
   // ★ FIX: 알바 패널티 계산 (기존에는 누락됨)
+  // ★ FIX: penaltyMap 키 문자열 조회 동일 적용
   parts.filter(m=>m.isAlba).forEach(m=>{
-    const pid=raidCur.penaltyMap?raidCur.penaltyMap[m.id]:null;if(!pid)return;
+    const pid=raidCur.penaltyMap?(raidCur.penaltyMap[m.id]||raidCur.penaltyMap[String(m.id)]):null;
+    if(!pid)return;
     const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
     const albaBase=mercAlbaFixed[m.id]||0;
     let total=(pen.amount||0);
@@ -1307,7 +1313,7 @@ function calcRaid(raidCur){
         // ★ FIX: 노쇼는 벌금 총액만 (음수)
         finalMap[m.id]=Math.round(-pen*10)/10;
       } else {
-        finalMap[m.id]=Math.round((albaBase-pen+bonusPerNoPenaltyFinal)*10)/10;
+        finalMap[m.id]=Math.round((albaBase-pen)*10)/10;
       }
       return;
     }
@@ -1462,10 +1468,12 @@ function renderResult(){
       else if(pv!=null)subLines.push(`<span style="color:#bf360c;">퍼센트 ${fmt(pv)}만</span>`);
       else subLines.push(`<span style="color:var(--text2);">균등분배</span>`);
       if(penalty){
-        // ★ FIX: 노쇼는 벌금만 표시
         if(isNoShow)subLines.push(`<span style="color:var(--red2);font-weight:700;">🚫 노쇼 벌금 -${fmt(penalty)}만</span>`);
         else subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(penalty)}만 (${penaltyName})</span>`);
-      } else subLines.push(`<span style="color:#2e7d32;">패널티없음 보너스 +${fmt(r.bonusPerNoPenalty||0)}만</span>`);
+      } else if(!m.isAlba){
+        // 용병만 보너스 표시, 알바는 고정급이므로 보너스 없음
+        subLines.push(`<span style="color:#2e7d32;">패널티없음 보너스 +${fmt(r.bonusPerNoPenalty||0)}만</span>`);
+      }
     } else {
       if(penalty){
         // ★ FIX: 노쇼는 벌금만 표시
@@ -1651,7 +1659,7 @@ function renderPenaltyHistoryList(){
 // ══════════════════════════════════════════
 function renderAll(){renderSettings();renderRaidInput();}
 
-const UPDATE_VERSION='2026.04.11';
+const UPDATE_VERSION='2026.04.11b';
 function showUpdatePopup(){
   const dismissed=localStorage.getItem('mpl_update_dismissed');
   const today=new Date().toISOString().slice(0,10);
