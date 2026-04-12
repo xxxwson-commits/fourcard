@@ -568,7 +568,7 @@ select{cursor:pointer;}
       <div style="margin-bottom:6px;">
         <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🐛 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 적용이 전혀 반영되지 않던 핵심 버그 수정 (penaltyMap 키 타입 불일치)</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 퍼센트(%) 지급 시 분배 기준 인원 오류 수정 — 알바 제외 인원이 아닌 전체 참여 인원 기준으로 계산</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>기본 1인당 분배금 계산 기준 오류 수정 — 알바 제외 인원(n-1)이 아닌 전체 참여 인원 기준으로 풀 나누도록 변경 (엑셀과 동일)</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>계산 상세의 분배 풀 금액이 지원금 차감 전 값으로 표시되던 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 벌금이 공대원 보너스 풀에 반영되지 않던 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 보너스 계산 오류 수정 — 벌금 ÷ 인원이 실제보다 크게 나오던 버그</div>
@@ -1277,7 +1277,7 @@ function calcRaid(raidCur){
     const pid=getPenaltyId(m.id);if(!pid)return;
     const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
     let total=(pen.amount||0);
-    if(pen.pct&&pen.pct>0)total+=basePerPersonFinal*(pen.pct/100);
+    if(pen.pct&&pen.pct>0)total+=basePerAll*(pen.pct/100); // ★ 전체 인원 기준
     total=Math.round(total*10)/10;
     penaltyAmtMapFinal[m.id]=total;
     if(pen.name&&pen.name.includes('노쇼'))isNoShowMap[m.id]=true;
@@ -1339,7 +1339,6 @@ function calcRaid(raidCur){
     if(m.isMerc){
       let amt;
       const myPenalty=penaltyAmtMapFinal[m.id]||0;
-      // ★ 내 보너스 = (전체벌금풀 - 내벌금) / distribParts인원수
       const myBonus=n>0?Math.round((totalPenaltyPool-myPenalty)/n*10)/10:0;
       if(mercAlbaFixed[m.id]!=null){
         amt=mercAlbaFixed[m.id];
@@ -1350,7 +1349,7 @@ function calcRaid(raidCur){
         if(isNoShowMap[m.id])amt=-myPenalty;
         else amt=amt-myPenalty+myBonus;
       } else {
-        amt=basePerPersonFinal;
+        amt=basePerAll; // ★ 설정 없는 용병도 전체 인원 기준
         if(isNoShowMap[m.id])amt=-myPenalty;
         else amt=amt-myPenalty+myBonus;
       }
@@ -1362,7 +1361,7 @@ function calcRaid(raidCur){
     const myPenalty=penaltyAmtMapFinal[m.id]||0;
     // ★ 내 보너스 = (전체벌금풀 - 내벌금) / distribParts인원수
     const myBonus=n>0?Math.round((totalPenaltyPool-myPenalty)/n*10)/10:0;
-    let amt=basePerPersonFinal;
+    let amt=basePerAll; // ★ 전체 인원(알바 포함) 기준 1인당
     if(isNoShowMap[m.id]){
       amt=-myPenalty;
     } else {
@@ -1389,7 +1388,7 @@ function calcRaid(raidCur){
     poolFinal:Math.round(poolFinal*10)/10,
     penaltyPool:Math.round(totalPenaltyPool*10)/10,
     bonusPerPersonBase:Math.round(bonusPerPersonBase*10)/10,
-    basePerPerson:Math.round(basePerPersonFinal*10)/10,
+    basePerPerson:Math.round(basePerAll*10)/10,
     sellerIncentiveMap,recruiterIncentiveMap,
     penaltyAmtMap:allPenaltyAmtMap,
     isNoShowMap,
@@ -1676,7 +1675,7 @@ function renderPenaltyHistoryList(){
 // ══════════════════════════════════════════
 function renderAll(){renderSettings();renderRaidInput();}
 
-const UPDATE_VERSION='2026.04.11g';
+const UPDATE_VERSION='2026.04.11h';
 function showUpdatePopup(){
   const dismissed=localStorage.getItem('mpl_update_dismissed');
   const today=new Date().toISOString().slice(0,10);
