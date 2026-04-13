@@ -547,7 +547,7 @@ select{cursor:pointer;}
 </div>
 
 </div><!-- /main -->
-<div class="footer" id="footerDate">🌊 마지막 업데이트: 2026.04.11 · 문의사항 디스코드 j_son1993 🌊</div>
+<div class="footer" id="footerDate">🌊 마지막 업데이트: 2026.04.13 · 문의사항 디스코드 j_son1993 🌊</div>
 
 <!-- 업데이트 팝업 -->
 <div id="updatePopup" style="position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:9998;display:none;align-items:center;justify-content:center;">
@@ -561,21 +561,36 @@ select{cursor:pointer;}
     </div>
     <div style="padding:16px 20px;overflow-y:auto;flex:1;">
 
-      <!-- 2026.04.11 최신 -->
+      <!-- 2026.04.13 최신 -->
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-        <span style="background:#4dd4de;color:#fff;font-family:'Jua',sans-serif;font-size:11px;padding:3px 10px;border-radius:20px;">2026.04.11 최신</span>
+        <span style="background:#4dd4de;color:#fff;font-family:'Jua',sans-serif;font-size:11px;padding:3px 10px;border-radius:20px;">2026.04.13 최신</span>
       </div>
       <div style="margin-bottom:6px;">
         <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🐛 버그 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 적용이 전혀 반영되지 않던 핵심 버그 수정 (penaltyMap 키 타입 불일치)</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>기본 1인당 분배금 계산 기준 오류 수정 — 알바 제외 인원(n-1)이 아닌 전체 참여 인원 기준으로 풀 나누도록 변경 (엑셀과 동일)</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>계산 상세의 분배 풀 금액이 지원금 차감 전 값으로 표시되던 버그 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 벌금이 공대원 보너스 풀에 반영되지 않던 버그 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 보너스 계산 오류 수정 — 벌금 ÷ 인원이 실제보다 크게 나오던 버그</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 퍼센트(%) 지급 방식 설정 시 0만으로 표시되던 버그 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바에게 잘못 지급되던 패널티 보너스 제거 (알바는 패널티 보너스 분배 대상 아님)</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 패널티 계산 시 분배 인원 오류 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 패널티는 분배금에서 차감하지 않고 벌금 총액만 표시하도록 변경</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바(퍼센트 지급 포함)도 패널티 벌금 보너스를 나눠받도록 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>기본 1인당 분배금을 전체 참여 인원 기준으로 계산하도록 수정 (엑셀과 동일)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>계산 상세의 분배 풀 금액이 지원금 차감 전 값으로 표시되던 버그 수정</div>
+      </div>
+
+      <!-- 구분선 -->
+      <div style="display:flex;align-items:center;gap:8px;margin:12px 0 10px;">
+        <div style="flex:1;height:1px;background:#d8f5f8;"></div>
+        <span style="font-size:11px;color:#b0c8d0;font-family:'Jua',sans-serif;">이전 업데이트</span>
+        <div style="flex:1;height:1px;background:#d8f5f8;"></div>
+      </div>
+
+      <!-- 2026.04.11 -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+        <span style="background:#f0fbff;color:#2fb8c8;border:1px solid #c8f0f5;font-family:'Jua',sans-serif;font-size:11px;padding:3px 10px;border-radius:20px;">2026.04.11</span>
+      </div>
+      <div style="margin-bottom:6px;">
+        <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🐛 버그 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>패널티 적용이 전혀 반영되지 않던 핵심 버그 수정 (penaltyMap 키 타입 불일치)</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 권한 멤버 패널티 정산 내역 미반영 버그 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 퍼센트(%) 지급 시 0만으로 표시되던 버그 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>벌금 낸 사람도 다른 사람 벌금 보너스를 받도록 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>알바 벌금이 공대원 보너스 풀에 반영되지 않던 버그 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#6aa8b4;"><span style="background:#f0fbff;color:#6aa8b4;border:1px solid #c8f0f5;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 패널티는 벌금 총액만 표시하도록 변경</div>
       </div>
 
       <!-- 구분선 -->
@@ -1324,14 +1339,17 @@ function calcRaid(raidCur){
 
   const finalMap={};
   parts.forEach(m=>{
-    // 알바: 고정 또는 퍼센트 지급, 패널티/노쇼 반영, 보너스 대상 아님
+    // 알바: 고정 또는 퍼센트 지급, 패널티/노쇼 반영
+    // ★ 알바도 다른 사람 벌금 보너스를 나눠받음 (단, 보너스 분배 인원 n은 distribParts 기준)
     if(m.isAlba){
       const albaBase=mercAlbaPct[m.id]!=null?mercAlbaPct[m.id]:(mercAlbaFixed[m.id]||0);
-      const pen=albaPenaltyAmtMap[m.id]||0;
+      const myPenalty=albaPenaltyAmtMap[m.id]||0;
+      // 알바도 (전체벌금풀 - 내벌금) / 전체인원 으로 보너스 받음
+      const myBonus=nAll>0?Math.round((totalPenaltyPool-myPenalty)/nAll*10)/10:0;
       if(isNoShowMap[m.id]){
-        finalMap[m.id]=Math.round(-pen*10)/10;
+        finalMap[m.id]=Math.round(-myPenalty*10)/10;
       } else {
-        finalMap[m.id]=Math.round((albaBase-pen)*10)/10;
+        finalMap[m.id]=Math.round((albaBase-myPenalty+myBonus)*10)/10;
       }
       return;
     }
@@ -1339,7 +1357,7 @@ function calcRaid(raidCur){
     if(m.isMerc){
       let amt;
       const myPenalty=penaltyAmtMapFinal[m.id]||0;
-      const myBonus=n>0?Math.round((totalPenaltyPool-myPenalty)/n*10)/10:0;
+      const myBonus=nAll>0?Math.round((totalPenaltyPool-myPenalty)/nAll*10)/10:0;
       if(mercAlbaFixed[m.id]!=null){
         amt=mercAlbaFixed[m.id];
         if(isNoShowMap[m.id])amt=-myPenalty;
@@ -1359,8 +1377,8 @@ function calcRaid(raidCur){
 
     // 일반 멤버
     const myPenalty=penaltyAmtMapFinal[m.id]||0;
-    // ★ 내 보너스 = (전체벌금풀 - 내벌금) / distribParts인원수
-    const myBonus=n>0?Math.round((totalPenaltyPool-myPenalty)/n*10)/10:0;
+    // ★ 내 보너스 = (전체벌금풀 - 내벌금) / 전체인원수
+    const myBonus=nAll>0?Math.round((totalPenaltyPool-myPenalty)/nAll*10)/10:0;
     let amt=basePerAll; // ★ 전체 인원(알바 포함) 기준 1인당
     if(isNoShowMap[m.id]){
       amt=-myPenalty;
@@ -1470,6 +1488,7 @@ function renderResult(){
     // ★ FIX: 노쇼 여부 확인
     const isNoShow=r.isNoShowMap&&r.isNoShowMap[m.id];
     let subLines=[];
+    const totalN=(r.participants||[]).length||1; // 전체 인원수 (알바 포함)
     if(isMA){
       const fv=r.mercAlbaFixed?r.mercAlbaFixed[m.id]:null;
       const pv=r.mercAlbaPct?r.mercAlbaPct[m.id]:null;
@@ -1478,23 +1497,18 @@ function renderResult(){
       else subLines.push(`<span style="color:var(--text2);">균등분배</span>`);
       if(isNoShow){
         subLines.push(`<span style="color:var(--red2);font-weight:700;">🚫 노쇼 벌금 -${fmt(penalty)}만</span>`);
-      } else if(!m.isAlba){
-        // 용병: 내 보너스 = (전체벌금풀 - 내벌금) / n
+      } else {
         const myPen=penalty||0;
-        const myBonus=r.bonusPerPersonBase!=null?Math.round((r.penaltyPool-myPen)/Math.max(1,(r.participants||[]).filter(id=>{const mm=r.memberSnapshot?r.memberSnapshot.find(x=>x.id==id):getMember(id);return mm&&!mm.isAlba;}).length)*10)/10:(r.bonusPerPersonBase||0);
+        const myBonus=r.penaltyPool>0?Math.round((r.penaltyPool-myPen)/totalN*10)/10:0;
         if(myPen)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(myPen)}만 (${penaltyName})</span>`);
         if(r.penaltyPool>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(myBonus)}만</span>`);
-      } else if(penalty){
-        subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(penalty)}만 (${penaltyName})</span>`);
       }
     } else {
       if(isNoShow){
         subLines.push(`<span style="color:var(--red2);font-weight:700;">🚫 노쇼 벌금 -${fmt(penalty)}만</span>`);
       } else {
-        // 각자 내 보너스 = (전체벌금풀 - 내벌금) / n
         const myPen=penalty||0;
-        const distN=(r.participants||[]).filter(id=>{const mm=r.memberSnapshot?r.memberSnapshot.find(x=>x.id==id):getMember(id);return mm&&!mm.isAlba;}).length||1;
-        const myBonus=r.penaltyPool>0?Math.round((r.penaltyPool-myPen)/distN*10)/10:0;
+        const myBonus=r.penaltyPool>0?Math.round((r.penaltyPool-myPen)/totalN*10)/10:0;
         if(myPen)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(myPen)}만 (${penaltyName})</span>`);
         if(r.penaltyPool>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(myBonus)}만</span>`);
         if(isSupport)subLines.push(`<span style="color:#6a1b9a;">지원금 +${fmt(r.supportMap[m.id])}만</span>`);
@@ -1675,7 +1689,7 @@ function renderPenaltyHistoryList(){
 // ══════════════════════════════════════════
 function renderAll(){renderSettings();renderRaidInput();}
 
-const UPDATE_VERSION='2026.04.11h';
+const UPDATE_VERSION='2026.04.13';
 function showUpdatePopup(){
   const dismissed=localStorage.getItem('mpl_update_dismissed');
   const today=new Date().toISOString().slice(0,10);
