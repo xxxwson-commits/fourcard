@@ -1415,6 +1415,7 @@ function calcRaid(raidCur){
     poolFinal:Math.round(poolFinal*10)/10,
     penaltyPool:Math.round(totalPenaltyPool*10)/10,
     bonusPerPersonBase:Math.round(bonusPerPersonBase*10)/10,
+    mercPctBonusPerPerson:Math.round(mercPctBonusPerPerson*10)/10,
     basePerPerson:Math.round(basePerAll*10)/10,
     sellerIncentiveMap,recruiterIncentiveMap,
     penaltyAmtMap:allPenaltyAmtMap,
@@ -1520,6 +1521,7 @@ function renderResult(){
         const myBonus=r.penaltyPool>0?Math.round((r.penaltyPool-myPen)/totalN*10)/10:0;
         if(myPen)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(myPen)}만 (${penaltyName})</span>`);
         if(r.penaltyPool>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(myBonus)}만</span>`);
+        if(r.mercPctBonusPerPerson>0)subLines.push(`<span style="color:#2e7d32;">용병차감분 +${fmt(r.mercPctBonusPerPerson)}만</span>`);
         if(isSupport)subLines.push(`<span style="color:#6a1b9a;">지원금 +${fmt(r.supportMap[m.id])}만</span>`);
         if(sellerBonus)subLines.push(`<span style="color:#1b5e20;">판매자인센 +${fmt(sellerBonus)}만</span>`);
         if(recruiterBonus)subLines.push(`<span style="color:#6a1b9a;">손님구인인센 +${fmt(recruiterBonus)}만</span>`);
@@ -1698,7 +1700,7 @@ function renderPenaltyHistoryList(){
 // ══════════════════════════════════════════
 function renderAll(){renderSettings();renderRaidInput();}
 
-const UPDATE_VERSION='2026.04.13b';
+const UPDATE_VERSION='2026.04.13c';
 function showUpdatePopup(){
   const dismissed=localStorage.getItem('mpl_update_dismissed');
   const today=new Date().toISOString().slice(0,10);
