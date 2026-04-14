@@ -1293,9 +1293,20 @@ function calcRaid(raidCur){
   });
   const totalSupport=Object.values(supportMap).reduce((s,v)=>s+v,0);
   const poolFinal=pool-totalSupport;
-  const basePerPersonFinal=poolFinal/n;
-  // ★ 알바 포함 전체 인원 기준 1인당 (알바 퍼센트 지급 기준)
-  const basePerAll=nAll>0?poolFinal/nAll:0;
+
+  // ★ 고정급여 알바/용병은 이미 pool에서 선차감됨 → 나머지를 n(알바제외)으로 나눔
+  // ★ 퍼센트 알바/용병은 pool에서 차감 없음 → 전체 nAll로 나눔
+  // 퍼센트 지급 알바/용병 수 계산
+  const pctMercAlbaCount=parts.filter(m=>{
+    if(!isMercOrAlba(m))return false;
+    const s=settings[m.id]||{type:'fixed',value:0};
+    return s.type==='pct'&&s.value>0;
+  }).length;
+  // 퍼센트 알바/용병 포함한 유효 분배 인원
+  const nForBase=n+pctMercAlbaCount; // 고정 알바 제외, 퍼센트 알바 포함
+  const basePerPersonFinal=poolFinal/n; // 공대원/고정용병 기준 (알바 제외)
+  // ★ 퍼센트 알바/용병 지급 기준: 퍼센트 인원 포함한 인원으로 나눔
+  const basePerAll=nForBase>0?poolFinal/nForBase:basePerPersonFinal;
 
   // 패널티 계산
   // penaltyMap 키가 JSON 직렬화 후 문자열이 되므로 양쪽 조회
