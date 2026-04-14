@@ -1549,8 +1549,9 @@ function renderResult(){
         subLines.push(`<span style="color:var(--red2);font-weight:700;">🚫 노쇼 벌금 -${fmt(penalty)}만</span>`);
       } else {
         const myPen=penalty||0;
+        const isFixedAlba=m.isAlba&&fv!=null;
         if(myPen)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(myPen)}만 (${penaltyName})</span>`);
-        if(!myPen&&bonusAmt>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(bonusAmt)}만</span>`);
+        if(!myPen&&bonusAmt>0&&!isFixedAlba)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(bonusAmt)}만</span>`);
       }
     } else {
       if(isNoShow){
