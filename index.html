@@ -567,7 +567,7 @@ select{cursor:pointer;}
       </div>
       <div style="margin-bottom:6px;">
         <div style="font-family:'Jua',sans-serif;font-size:12px;color:#2fb8c8;margin-bottom:6px;display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:3px;height:11px;background:#4dd4de;border-radius:2px;"></span>🐛 버그 수정</div>
-        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>용병/알바 퍼센트(%) 지급 시 차감분이 나머지 공대원·용병에게 분배되지 않고 증발하던 버그 수정</div>
+        <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;border-bottom:1px dashed #d8f5f8;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>분배 계산 로직 전면 재작성 — 고정용병 분배 인원 오류, 패널티 보너스 계산 오류, 퍼센트 차감분 증발 등 다수 버그 수정</div>
         <div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:11px;color:#2d5a6b;"><span style="background:#fff0f2;color:#e05070;border:1px solid #f0b0b8;font-size:9px;padding:1px 6px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;">FIX</span>노쇼 벌금 보너스를 노쇼 당사자 포함 인원으로 나누던 오류 수정 (노쇼 제외 인원으로 정확히 분배)</div>
       </div>
 
@@ -1236,11 +1236,25 @@ function saveRaid(){
 // ══════════════════════════════════════════
 function calcRaid(raidCur){
   const parts=raidCur.participants.map(id=>getMember(id)).filter(Boolean);
-  // 알바는 분배 풀 1/n 계산에서 제외 (알바 고정/퍼센트는 별도 지급)
-  const distribParts=parts.filter(m=>!m.isAlba);
+  const settings=cfg.mercAlbaSettings||{};
+
+  // ═══ 1. 고정/퍼센트 알바·용병 분류 ═══
+  const mercAlbaFixed={}; // 고정 지급액
+  parts.forEach(m=>{
+    if(!isMercOrAlba(m))return;
+    const s=settings[m.id]||{type:'fixed',value:0};
+    if(s.type==='fixed'&&s.value>0)mercAlbaFixed[m.id]=s.value;
+  });
+
+  // distribParts: 순수공대원 + 퍼센트용병 (고정알바·고정용병 제외)
+  const distribParts=parts.filter(m=>{
+    if(m.isAlba)return false;
+    if(m.isMerc&&mercAlbaFixed[m.id]!=null)return false;
+    return true;
+  });
   const albaParts=parts.filter(m=>m.isAlba);
+  const fixedMercParts=parts.filter(m=>m.isMerc&&mercAlbaFixed[m.id]!=null);
   const n=distribParts.length;if(!n)return{};
-  // 알바 포함 전체 인원 기준 1인당 (알바 퍼센트 지급 기준)
   const nAll=parts.length;
 
   const soldItems=raidCur.items.filter(it=>it.status!=='판매중');
@@ -1273,15 +1287,6 @@ function calcRaid(raidCur){
   });
   const totalRecruiterIncentive=Object.values(recruiterIncentiveMap).reduce((s,v)=>s+v,0);
 
-  const settings=cfg.mercAlbaSettings||{};
-  const mercAlbaFixed={};
-  parts.forEach(m=>{
-    if(!isMercOrAlba(m))return;
-    const s=settings[m.id]||{type:'fixed',value:0};
-    if(s.type==='fixed'&&s.value>0)mercAlbaFixed[m.id]=s.value;
-  });
-  const totalMercAlbaFixed=Object.values(mercAlbaFixed).reduce((s,v)=>s+v,0);
-
   const pool=totalNet+totalGuestNet-totalSellerIncentive-totalRecruiterIncentive-totalMercAlbaFixed-totalCost;
 
   const supportSettings=cfg.supportSettings||{};
@@ -1294,145 +1299,142 @@ function calcRaid(raidCur){
   const totalSupport=Object.values(supportMap).reduce((s,v)=>s+v,0);
   const poolFinal=pool-totalSupport;
 
-  // ★ 고정급여 알바/용병은 이미 pool에서 선차감됨 → 나머지를 n(알바제외)으로 나눔
-  // ★ 퍼센트 알바/용병은 pool에서 차감 없음 → 전체 nAll로 나눔
-  // 퍼센트 지급 알바/용병 수 계산
-  const pctMercAlbaCount=parts.filter(m=>{
-    if(!isMercOrAlba(m))return false;
-    const s=settings[m.id]||{type:'fixed',value:0};
-    return s.type==='pct'&&s.value>0;
-  }).length;
-  // 퍼센트 알바/용병 포함한 유효 분배 인원
-  const nForBase=n+pctMercAlbaCount; // 고정 알바 제외, 퍼센트 알바 포함
-  const basePerPersonFinal=poolFinal/n; // 공대원/고정용병 기준 (알바 제외)
-  // ★ 퍼센트 알바/용병 지급 기준: 퍼센트 인원 포함한 인원으로 나눔
-  const basePerAll=nForBase>0?poolFinal/nForBase:basePerPersonFinal;
+  // ═══ 기본 1인당 분배금 ═══
+  // distribParts = 순수공대원 + 퍼센트용병 (고정알바·고정용병 이미 제외됨)
+  // 퍼센트알바도 distribParts와 같은 기준으로 1인당 계산
+  const pctAlbaList=albaParts.filter(m=>{const s=settings[m.id]||{type:'fixed',value:0};return s.type==='pct'&&s.value>0;});
+  const pctMercList=distribParts.filter(m=>m.isMerc); // 퍼센트용병
+  const nForBase=n+pctAlbaList.length; // distribParts + 퍼센트알바
+  const basePerAll=nForBase>0?poolFinal/nForBase:poolFinal/Math.max(1,n);
 
-  // 패널티 계산
-  // penaltyMap 키가 JSON 직렬화 후 문자열이 되므로 양쪽 조회
+  // ═══ 퍼센트 알바/용병 지급액 + 차감분 계산 ═══
+  const mercAlbaPct={};
+  let totalPctDeduction=0;
+  // 퍼센트용병 차감분 → 순수공대원에게만 (퍼센트용병 본인은 제외)
+  pctMercList.forEach(m=>{
+    const s=settings[m.id]||{type:'fixed',value:0};
+    const pctAmt=Math.round(basePerAll*(s.value/100)*10)/10;
+    mercAlbaPct[m.id]=pctAmt;
+    totalPctDeduction+=basePerAll-pctAmt;
+  });
+  // 퍼센트알바 차감분 → 순수공대원에게만
+  pctAlbaList.forEach(m=>{
+    const s=settings[m.id]||{type:'fixed',value:0};
+    const pctAmt=Math.round(basePerAll*(s.value/100)*10)/10;
+    mercAlbaPct[m.id]=pctAmt;
+    totalPctDeduction+=basePerAll-pctAmt;
+  });
+  // 순수공대원(퍼센트용병·알바 제외) 중 패널티없는 인원에게만 차감분 분배
+  // (패널티/노쇼 계산 후 최종 결정)
+  const purePublicN=distribParts.filter(m=>!m.isMerc).length;
+  // 임시값: 패널티없는 공대원 수는 후에 재계산
+  let pctDeductionBonusPerPerson=0; // 패널티 계산 후 확정
+
+  // ═══ 패널티 계산 ═══
   const getPenaltyId=(id)=>raidCur.penaltyMap?(raidCur.penaltyMap[id]||raidCur.penaltyMap[String(id)]||null):null;
-  const penaltyAmtMapFinal={};  // distribParts(일반+용병) 패널티
-  const albaPenaltyAmtMap={};   // 알바 패널티
+  const penaltyAmtMapFinal={}; // distribParts + 고정용병 패널티
+  const albaPenaltyAmtMap={};  // 알바 패널티
   const isNoShowMap={};
 
-  // distribParts 패널티 계산
+  // distribParts(순수공대원+퍼센트용병) 패널티
   distribParts.forEach(m=>{
     const pid=getPenaltyId(m.id);if(!pid)return;
     const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
     let total=(pen.amount||0);
-    if(pen.pct&&pen.pct>0)total+=basePerAll*(pen.pct/100); // ★ 전체 인원 기준
-    total=Math.round(total*10)/10;
-    penaltyAmtMapFinal[m.id]=total;
+    if(pen.pct&&pen.pct>0)total+=basePerAll*(pen.pct/100);
+    penaltyAmtMapFinal[m.id]=Math.round(total*10)/10;
     if(pen.name&&pen.name.includes('노쇼'))isNoShowMap[m.id]=true;
   });
-
-  // 알바 패널티: 알바 지급액 기준으로 계산
+  // 고정용병 패널티 (고정지급액 기준)
+  fixedMercParts.forEach(m=>{
+    const pid=getPenaltyId(m.id);if(!pid)return;
+    const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
+    let total=(pen.amount||0);
+    if(pen.pct&&pen.pct>0)total+=(mercAlbaFixed[m.id]||0)*(pen.pct/100);
+    penaltyAmtMapFinal[m.id]=Math.round(total*10)/10;
+    if(pen.name&&pen.name.includes('노쇼'))isNoShowMap[m.id]=true;
+  });
+  // 알바 패널티
   albaParts.forEach(m=>{
     const pid=getPenaltyId(m.id);if(!pid)return;
     const pen=cfg.penalties.find(p=>p.id==pid);if(!pen)return;
     const s=settings[m.id]||{type:'fixed',value:0};
-    // ★ 알바 지급 기준: 고정이면 고정액, 퍼센트이면 전체인원 기준 1인당 × %
-    const albaBase=s.type==='fixed'?(mercAlbaFixed[m.id]||0):Math.round(basePerAll*(s.value/100)*10)/10;
+    const albaBase=s.type==='fixed'?(mercAlbaFixed[m.id]||0):(mercAlbaPct[m.id]||0);
     let total=(pen.amount||0);
     if(pen.pct&&pen.pct>0)total+=albaBase*(pen.pct/100);
-    total=Math.round(total*10)/10;
-    albaPenaltyAmtMap[m.id]=total;
+    albaPenaltyAmtMap[m.id]=Math.round(total*10)/10;
     if(pen.name&&pen.name.includes('노쇼'))isNoShowMap[m.id]=true;
   });
 
-  // ★ 전체 벌금 풀 = distribParts 벌금 + 알바 벌금 모두 합산
   const totalPenaltyPool=
     Object.values(penaltyAmtMapFinal).reduce((s,v)=>s+v,0)+
     Object.values(albaPenaltyAmtMap).reduce((s,v)=>s+v,0);
 
-  // ★ 보너스 수령 인원 = 전체 인원 - 노쇼 인원 (노쇼는 보너스 안 받음)
+  // ═══ 패널티 보너스 ═══
+  // 보너스 = totalPenaltyPool / 패널티없는인원
+  // 보너스 대상: 패널티없는 distribParts + 패널티없는 퍼센트알바 + 패널티없는 고정용병
+  // 고정알바는 제외
+  const bonusReceivers=new Set([
+    ...distribParts.filter(m=>!penaltyAmtMapFinal[m.id]&&!isNoShowMap[m.id]).map(m=>m.id),
+    ...fixedMercParts.filter(m=>!penaltyAmtMapFinal[m.id]&&!isNoShowMap[m.id]).map(m=>m.id),
+    ...pctAlbaList.filter(m=>!albaPenaltyAmtMap[m.id]&&!isNoShowMap[m.id]).map(m=>m.id),
+  ]);
+  const bonusReceiverCount=Math.max(1,bonusReceivers.size);
+  const bonusPerNoPenalty=totalPenaltyPool>0?Math.round(totalPenaltyPool/bonusReceiverCount*10)/10:0;
   const noShowCount=Object.keys(isNoShowMap).length;
-  const bonusReceiverCount=nAll-noShowCount; // 노쇼 제외 전체 인원
 
-  // 알바/용병 퍼센트 지급 계산
-  const mercAlbaPct={};
-  let totalPctDeduction=0; // 용병+알바 퍼센트 차감분 합계 → distribParts 전체에 균등 분배
+  // ★ 차감분 보너스: 패널티없는 순수공대원에게만 (노쇼/패널티있는 공대원 제외)
+  const noPenaltyPurePublic=distribParts.filter(m=>!m.isMerc&&!penaltyAmtMapFinal[m.id]&&!isNoShowMap[m.id]).length;
+  pctDeductionBonusPerPerson=noPenaltyPurePublic>0?Math.round(totalPctDeduction/noPenaltyPurePublic*10)/10:0;
 
-  // 용병 퍼센트: basePerAll × %
-  distribParts.forEach(m=>{
-    if(!m.isMerc||m.isAlba)return;
-    const s=settings[m.id]||{type:'fixed',value:0};
-    if(s.type==='pct'&&s.value>0){
-      const pctAmt=Math.round(basePerAll*(s.value/100)*10)/10;
-      mercAlbaPct[m.id]=pctAmt;
-      // 차감분 = basePerAll - 지급액 → distribParts 전체에 분배
-      totalPctDeduction+=basePerAll-pctAmt;
-    }
-  });
-  // 알바 퍼센트: basePerAll × %
-  albaParts.forEach(m=>{
-    const s=settings[m.id]||{type:'fixed',value:0};
-    if(s.type==='pct'&&s.value>0){
-      const pctAmt=Math.round(basePerAll*(s.value/100)*10)/10;
-      mercAlbaPct[m.id]=pctAmt;
-      // 알바 차감분도 distribParts 전체에 분배
-      totalPctDeduction+=basePerAll-pctAmt;
-    }
-  });
-  // ★ 차감분을 distribParts(공대원+용병) 전체 인원에게 균등 분배
-  const pctDeductionBonusPerPerson=n>0?Math.round(totalPctDeduction/n*10)/10:0;
-
+  // ═══ finalMap ═══
   const finalMap={};
   parts.forEach(m=>{
-    // 알바: 고정 또는 퍼센트 지급, 패널티/노쇼 반영
-    // ★ 알바도 다른 사람 벌금 보너스를 나눠받음 (단, 보너스 분배 인원 n은 distribParts 기준)
-    if(m.isAlba){
-      const albaBase=mercAlbaPct[m.id]!=null?mercAlbaPct[m.id]:(mercAlbaFixed[m.id]||0);
+    // 고정알바
+    if(m.isAlba&&mercAlbaFixed[m.id]!=null){
       const myPenalty=albaPenaltyAmtMap[m.id]||0;
-      // 알바도 (전체벌금풀 - 내벌금) / 전체인원 으로 보너스 받음
-      const myBonus=bonusReceiverCount>0?Math.round((totalPenaltyPool-myPenalty)/bonusReceiverCount*10)/10:0;
-      if(isNoShowMap[m.id]){
-        finalMap[m.id]=Math.round(-myPenalty*10)/10;
-      } else {
-        finalMap[m.id]=Math.round((albaBase-myPenalty+myBonus)*10)/10;
-      }
+      if(isNoShowMap[m.id]){finalMap[m.id]=Math.round(-myPenalty*10)/10;return;}
+      finalMap[m.id]=Math.round((mercAlbaFixed[m.id]-myPenalty)*10)/10;
       return;
     }
-
-    if(m.isMerc){
-      let amt;
+    // 퍼센트알바
+    if(m.isAlba&&mercAlbaPct[m.id]!=null){
+      const myPenalty=albaPenaltyAmtMap[m.id]||0;
+      if(isNoShowMap[m.id]){finalMap[m.id]=Math.round(-myPenalty*10)/10;return;}
+      const myBonus=bonusReceivers.has(m.id)?bonusPerNoPenalty:0;
+      finalMap[m.id]=Math.round((mercAlbaPct[m.id]-myPenalty+myBonus)*10)/10;
+      return;
+    }
+    // 고정용병
+    if(m.isMerc&&mercAlbaFixed[m.id]!=null){
       const myPenalty=penaltyAmtMapFinal[m.id]||0;
-      const myBonus=bonusReceiverCount>0?Math.round((totalPenaltyPool-myPenalty)/bonusReceiverCount*10)/10:0;
-      if(mercAlbaFixed[m.id]!=null){
-        amt=mercAlbaFixed[m.id];
-        if(isNoShowMap[m.id])amt=-myPenalty;
-        else amt=amt-myPenalty+myBonus+pctDeductionBonusPerPerson;
-      } else if(mercAlbaPct[m.id]!=null){
-        amt=mercAlbaPct[m.id];
-        if(isNoShowMap[m.id])amt=-myPenalty;
-        else amt=amt-myPenalty+myBonus+pctDeductionBonusPerPerson;
-      } else {
-        amt=basePerAll;
-        if(isNoShowMap[m.id])amt=-myPenalty;
-        else amt=amt-myPenalty+myBonus+pctDeductionBonusPerPerson;
-      }
-      finalMap[m.id]=Math.round(amt*10)/10;
+      if(isNoShowMap[m.id]){finalMap[m.id]=Math.round(-myPenalty*10)/10;return;}
+      const myBonus=bonusReceivers.has(m.id)?bonusPerNoPenalty:0;
+      finalMap[m.id]=Math.round((mercAlbaFixed[m.id]-myPenalty+myBonus+pctDeductionBonusPerPerson)*10)/10;
       return;
     }
-
-    // 일반 멤버
-    const myPenalty=penaltyAmtMapFinal[m.id]||0;
-    const myBonus=bonusReceiverCount>0?Math.round((totalPenaltyPool-myPenalty)/bonusReceiverCount*10)/10:0;
-    let amt=basePerAll;
-    if(isNoShowMap[m.id]){
-      amt=-myPenalty;
-    } else {
-      amt=amt-myPenalty+myBonus;
-      // ★ 용병/알바 퍼센트 차감분 보너스 (distribParts 전체 균등 분배)
-      amt+=pctDeductionBonusPerPerson;
-      if(sellerIncentiveMap[m.id])amt+=sellerIncentiveMap[m.id];
-      if(recruiterIncentiveMap[m.id])amt+=recruiterIncentiveMap[m.id];
-      if(supportMap[m.id]!=null)amt+=supportMap[m.id];
+    // 퍼센트용병
+    if(m.isMerc&&mercAlbaPct[m.id]!=null){
+      const myPenalty=penaltyAmtMapFinal[m.id]||0;
+      if(isNoShowMap[m.id]){finalMap[m.id]=Math.round(-myPenalty*10)/10;return;}
+      const myBonus=bonusReceivers.has(m.id)?bonusPerNoPenalty:0;
+      // 퍼센트용병: 차감분보너스 없음(자기가 차감분을 주는 입장)
+      finalMap[m.id]=Math.round((mercAlbaPct[m.id]-myPenalty+myBonus)*10)/10;
+      return;
     }
+    // 일반 공대원
+    const myPenalty=penaltyAmtMapFinal[m.id]||0;
+    if(isNoShowMap[m.id]){finalMap[m.id]=Math.round(-myPenalty*10)/10;return;}
+    const myBonus=bonusReceivers.has(m.id)?bonusPerNoPenalty:0;
+    // 차감분 보너스는 패널티없는 순수공대원만
+    const myPctBonus=(!myPenalty&&!m.isMerc)?pctDeductionBonusPerPerson:0;
+    let amt=basePerAll-myPenalty+myBonus+myPctBonus;
+    if(sellerIncentiveMap[m.id])amt+=sellerIncentiveMap[m.id];
+    if(recruiterIncentiveMap[m.id])amt+=recruiterIncentiveMap[m.id];
+    if(supportMap[m.id]!=null)amt+=supportMap[m.id];
     finalMap[m.id]=Math.round(amt*10)/10;
   });
 
-  // penaltyAmtMap에 알바 패널티도 합쳐서 반환 (결과 렌더용)
   const allPenaltyAmtMap={...penaltyAmtMapFinal,...albaPenaltyAmtMap};
 
   return{
@@ -1446,10 +1448,10 @@ function calcRaid(raidCur){
     pool:Math.round(pool*10)/10,
     poolFinal:Math.round(poolFinal*10)/10,
     penaltyPool:Math.round(totalPenaltyPool*10)/10,
-    noShowCount,
+    bonusPerNoPenalty:Math.round(bonusPerNoPenalty*10)/10,
     bonusReceiverCount,
-    bonusPerPersonBase:Math.round((bonusReceiverCount>0?totalPenaltyPool/bonusReceiverCount:0)*10)/10,
-    mercPctBonusPerPerson:Math.round(pctDeductionBonusPerPerson*10)/10,
+    noShowCount,
+    pctDeductionBonusPerPerson:Math.round(pctDeductionBonusPerPerson*10)/10,
     basePerPerson:Math.round(basePerAll*10)/10,
     sellerIncentiveMap,recruiterIncentiveMap,
     penaltyAmtMap:allPenaltyAmtMap,
@@ -1534,6 +1536,7 @@ function renderResult(){
     let subLines=[];
     const totalN=(r.participants||[]).length||1;
     const bonusN=r.bonusReceiverCount||Math.max(1,totalN-(r.noShowCount||0));
+    const bonusAmt=r.bonusPerNoPenalty||0; // 패널티없는인원에게 지급되는 보너스
     if(isMA){
       const fv=r.mercAlbaFixed?r.mercAlbaFixed[m.id]:null;
       const pv=r.mercAlbaPct?r.mercAlbaPct[m.id]:null;
@@ -1544,19 +1547,17 @@ function renderResult(){
         subLines.push(`<span style="color:var(--red2);font-weight:700;">🚫 노쇼 벌금 -${fmt(penalty)}만</span>`);
       } else {
         const myPen=penalty||0;
-        const myBonus=r.penaltyPool>0?Math.round((r.penaltyPool-myPen)/bonusN*10)/10:0;
         if(myPen)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(myPen)}만 (${penaltyName})</span>`);
-        if(r.penaltyPool>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(myBonus)}만</span>`);
+        if(!myPen&&bonusAmt>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(bonusAmt)}만</span>`);
       }
     } else {
       if(isNoShow){
         subLines.push(`<span style="color:var(--red2);font-weight:700;">🚫 노쇼 벌금 -${fmt(penalty)}만</span>`);
       } else {
         const myPen=penalty||0;
-        const myBonus=r.penaltyPool>0?Math.round((r.penaltyPool-myPen)/bonusN*10)/10:0;
         if(myPen)subLines.push(`<span style="color:var(--red2);">패널티 -${fmt(myPen)}만 (${penaltyName})</span>`);
-        if(r.penaltyPool>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(myBonus)}만</span>`);
-        if(r.mercPctBonusPerPerson>0)subLines.push(`<span style="color:#2e7d32;">용병차감분 +${fmt(r.mercPctBonusPerPerson)}만</span>`);
+        if(!myPen&&bonusAmt>0)subLines.push(`<span style="color:#2e7d32;">벌금보너스 +${fmt(bonusAmt)}만</span>`);
+        if(r.pctDeductionBonusPerPerson>0&&!m.isMerc)subLines.push(`<span style="color:#2e7d32;">차감분보너스 +${fmt(r.pctDeductionBonusPerPerson)}만</span>`);
         if(isSupport)subLines.push(`<span style="color:#6a1b9a;">지원금 +${fmt(r.supportMap[m.id])}만</span>`);
         if(sellerBonus)subLines.push(`<span style="color:#1b5e20;">판매자인센 +${fmt(sellerBonus)}만</span>`);
         if(recruiterBonus)subLines.push(`<span style="color:#6a1b9a;">손님구인인센 +${fmt(recruiterBonus)}만</span>`);
@@ -1735,7 +1736,7 @@ function renderPenaltyHistoryList(){
 // ══════════════════════════════════════════
 function renderAll(){renderSettings();renderRaidInput();}
 
-const UPDATE_VERSION='2026.04.14';
+const UPDATE_VERSION='2026.04.14b';
 function showUpdatePopup(){
   const dismissed=localStorage.getItem('mpl_update_dismissed');
   const today=new Date().toISOString().slice(0,10);
