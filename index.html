@@ -1287,6 +1287,8 @@ function calcRaid(raidCur){
   });
   const totalRecruiterIncentive=Object.values(recruiterIncentiveMap).reduce((s,v)=>s+v,0);
 
+  const totalMercAlbaFixed=Object.values(mercAlbaFixed).reduce((s,v)=>s+v,0);
+
   const pool=totalNet+totalGuestNet-totalSellerIncentive-totalRecruiterIncentive-totalMercAlbaFixed-totalCost;
 
   const supportSettings=cfg.supportSettings||{};
